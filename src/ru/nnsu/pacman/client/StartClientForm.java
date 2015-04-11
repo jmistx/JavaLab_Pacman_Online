@@ -9,14 +9,17 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.nnsu.pacman.client.ClientNavigator;
+import ru.nnsu.pacman.server.PacmanServer;
 
-public class StartForm extends javax.swing.JPanel {
+public class StartClientForm extends javax.swing.JPanel {
+     private final ClientNavigator navigator;
 
-
-    public StartForm() {
+    public StartClientForm(ClientNavigator navigator) {
         initComponents();
+        this.navigator = navigator;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,7 +100,7 @@ public class StartForm extends javax.swing.JPanel {
         int serverPort = Integer.parseInt(portTextBox.getText());
         String address = serverTextBox.getText();
         String nickName = nickNameTextBox.getText();
-        
+        ClientDto clientInfo = new ClientDto();
         try {
             InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
             System.out.println("Any of you heard of a socket with IP address " + address + " and port " + serverPort + "?");
@@ -107,11 +110,12 @@ public class StartForm extends javax.swing.JPanel {
                 DataOutputStream out = new DataOutputStream(sout);
                 out.writeUTF(nickName);
                 out.flush();
+                navigator.navigateToAdmin(clientInfo);
             }
         } catch (java.net.ConnectException x) {
             System.out.println("Connect refused");
         } catch (IOException ex) {
-            Logger.getLogger(StartForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnConnectActionPerformed
 

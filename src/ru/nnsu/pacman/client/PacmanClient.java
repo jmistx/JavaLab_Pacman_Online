@@ -1,18 +1,28 @@
 package ru.nnsu.pacman.client;
 
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class PacmanClient extends JFrame  {
-    public PacmanClient() {
+    
+   private CardLayout cards;
+    private JPanel cardHolder;
+    private ClientNavigator navigator;
 
+    public PacmanClient() {
         initUI();
     }
 
     private void initUI() {
+        cardHolder = new JPanel();
+        cards = new CardLayout();
+        cardHolder.setLayout(cards);
+        navigator = new ClientNavigator(cards, cardHolder);
 
-        add(new StartForm());
+        add(cardHolder);
+        pack();
 
         setSize(350, 200);
 
