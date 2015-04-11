@@ -5,17 +5,21 @@ import java.io.Serializable;
 public class Map implements Serializable {
 
     private final int mapGrid[][];
+    private int width;
+    private int height;
     
-    public Map() {
-        mapGrid = new int[getWeight()][getHeight()];
+    public Map(int width, int height) {
+        this.width = width;
+        this.height = height;
+        mapGrid = new int[width][height];
     }
     
-    public final int getWeight(){
-        return 10;
+    public final int getWidth(){
+        return width;
     }
     
     public final int getHeight(){
-        return 10;
+        return height;
     }
 
     public void SetCellAsWall(int x, int y) {
