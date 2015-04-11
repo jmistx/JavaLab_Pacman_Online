@@ -1,5 +1,13 @@
 package ru.nnsu.pacman.server;
 
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author JM
@@ -27,6 +35,11 @@ public class ServerStartForm extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         startButton.setText("Создать");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Порт:");
 
@@ -56,6 +69,23 @@ public class ServerStartForm extends javax.swing.JPanel {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        int port = 6666;
+        try {
+            ServerSocket ss = new ServerSocket(port);
+            System.out.println("Waiting for a client...");
+            Socket socket = ss.accept();
+            System.out.println("Sombody connected");
+            InputStream sin = socket.getInputStream();
+            DataInputStream in = new DataInputStream(sin);
+            String nickName = in.readUTF();
+            System.out.println(nickName);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_startButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

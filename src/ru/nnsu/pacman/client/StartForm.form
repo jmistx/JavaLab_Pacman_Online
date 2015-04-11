@@ -22,15 +22,20 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" pref="91" max="-2" attributes="0"/>
+                      <Component id="serverTextBox" min="-2" pref="91" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jTextField2" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Component id="portTextBox" min="-2" pref="53" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnConnect" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnConnect" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="nickNameTextBox" min="-2" pref="183" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -40,13 +45,18 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="serverTextBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="portTextBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="nickNameTextBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="btnConnect" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,8 +67,9 @@
         <Property name="text" type="java.lang.String" value="&#x421;&#x435;&#x440;&#x432;&#x435;&#x440;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="serverTextBox">
       <Properties>
+        <Property name="text" type="java.lang.String" value="127.0.0.1"/>
         <Property name="name" type="java.lang.String" value="serverAddres" noResource="true"/>
       </Properties>
     </Component>
@@ -67,8 +78,9 @@
         <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x440;&#x442;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="portTextBox">
       <Properties>
+        <Property name="text" type="java.lang.String" value="6666"/>
         <Property name="name" type="java.lang.String" value="Port" noResource="true"/>
       </Properties>
     </Component>
@@ -80,6 +92,17 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConnectActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="nickNameTextBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="WhiteNigger"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&#x41d;&#x438;&#x43a;"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
