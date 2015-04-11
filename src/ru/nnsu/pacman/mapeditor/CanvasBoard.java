@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import ru.nnsu.pacman.common.Map;
 
@@ -59,7 +58,7 @@ public class CanvasBoard extends JPanel {
           
             for (Integer y = 0; y < map.getHeight(); y++){
                 
-                Integer value = map.GetCellValue(x, y);
+                Integer value = map.getCellValue(x, y);
                 if( value == 1){
                     g.setColor(Color.blue);
                 }

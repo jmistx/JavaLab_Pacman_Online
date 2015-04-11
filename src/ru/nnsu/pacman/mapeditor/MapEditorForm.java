@@ -1,13 +1,10 @@
 package ru.nnsu.pacman.mapeditor;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import ru.nnsu.pacman.common.Map;
 
 
@@ -32,6 +29,8 @@ public class MapEditorForm extends javax.swing.JPanel {
         WidthText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         HeightText = new javax.swing.JTextField();
+        MapName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         SaveButton.setText("Сохранить");
         SaveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -58,20 +57,25 @@ public class MapEditorForm extends javax.swing.JPanel {
 
         jLabel2.setText("Высота");
 
+        jLabel3.setText("Название");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(OpenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CreateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(WidthText)
-                    .addComponent(HeightText))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(OpenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CreateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(WidthText)
+                        .addComponent(HeightText)
+                        .addComponent(MapName))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CanvasBoardContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addContainerGap())
@@ -96,7 +100,11 @@ public class MapEditorForm extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(HeightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 109, Short.MAX_VALUE)))
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(MapName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 41, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -114,13 +122,13 @@ public class MapEditorForm extends javax.swing.JPanel {
         try{
         final int width = Integer.parseInt(WidthText.getText());
         final int height = Integer.parseInt(HeightText.getText());
-        SetCurrentMap(new Map(width, height));
+        if (!"".equals(MapName.getText())){
+        final String name = MapName.getText();
+        SetCurrentMap(new Map(width, height, name));
+        }
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        
-        
-        
+        }  
     }//GEN-LAST:event_CreateButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
@@ -156,10 +164,12 @@ public class MapEditorForm extends javax.swing.JPanel {
     private javax.swing.JScrollPane CanvasBoardContainer;
     private javax.swing.JButton CreateButton;
     private javax.swing.JTextField HeightText;
+    private javax.swing.JTextField MapName;
     private javax.swing.JButton OpenButton;
     private javax.swing.JButton SaveButton;
     private javax.swing.JTextField WidthText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

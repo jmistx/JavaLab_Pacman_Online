@@ -7,11 +7,13 @@ public class Map implements Serializable {
     private final int mapGrid[][];
     private int width;
     private int height;
+    private String name;
     
-    public Map(int width, int height) {
+    public Map(int width, int height, String name) {
         this.width = width;
         this.height = height;
         mapGrid = new int[width][height];
+        this.name = name;
     }
     
     public final int getWidth(){
@@ -25,7 +27,7 @@ public class Map implements Serializable {
     public void SetCellAsWall(int x, int y) {
         mapGrid[x][y] = 1;
     }
-    public int GetCellValue(int x,int y){
+    public int getCellValue(int x,int y){
         return mapGrid[x][y];
     }
 
