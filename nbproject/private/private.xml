@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/ConnectionProcesser.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/ServerStartForm.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/AdminServerForm.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/PacmanServer.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/PacmanClient.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/AdminDto.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/StartForm.java</file>
+        </group>
     </open-files>
 </project-private>

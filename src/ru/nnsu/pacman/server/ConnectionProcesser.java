@@ -1,8 +1,11 @@
 package ru.nnsu.pacman.server;
 
+import ru.nnsu.pacman.common.PlayerMessage;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +25,13 @@ class ConnectionProcesser implements Runnable {
     public void run() {
         System.out.println("Sombody connected");
         try {
-            InputStream sin = socket.getInputStream();
-            DataInputStream in = new DataInputStream(sin);
-            String nickName = in.readUTF();
-            userListModel.addElement(nickName);
+            ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
+            PlayerMessage message = (PlayerMessage) socketIn.readObject();
+            userListModel.addElement(message.getNickName());
         } catch (IOException ex) {
+            Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
