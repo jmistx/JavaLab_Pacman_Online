@@ -13,12 +13,14 @@ import java.util.logging.Logger;
  * @author JM
  */
 public class ServerStartForm extends javax.swing.JPanel {
+    private final PacmanServer.Navigator navigator;
 
     /**
      * Creates new form ServerStartForm
      */
-    public ServerStartForm() {
+    public ServerStartForm(PacmanServer.Navigator navigator) {
         initComponents();
+        this.navigator = navigator;
     }
 
     /**
@@ -31,7 +33,7 @@ public class ServerStartForm extends javax.swing.JPanel {
     private void initComponents() {
 
         startButton = new javax.swing.JButton();
-        port = new javax.swing.JTextField();
+        portTextBox = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         startButton.setText("Создать");
@@ -41,6 +43,8 @@ public class ServerStartForm extends javax.swing.JPanel {
             }
         });
 
+        portTextBox.setText("6666");
+
         jLabel1.setText("Порт:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -49,12 +53,12 @@ public class ServerStartForm extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(startButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(port, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(portTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -63,34 +67,24 @@ public class ServerStartForm extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(portTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(startButton)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        int port = 6666;
-        try {
-            ServerSocket ss = new ServerSocket(port);
-            System.out.println("Waiting for a client...");
-            Socket socket = ss.accept();
-            System.out.println("Sombody connected");
-            InputStream sin = socket.getInputStream();
-            DataInputStream in = new DataInputStream(sin);
-            String nickName = in.readUTF();
-            System.out.println(nickName);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        int port = Integer.parseInt(portTextBox.getText());
+        PlayersDto dto = new PlayersDto();
+        dto.setPort(port);
+        navigator.navigateToPlayers(dto);
     }//GEN-LAST:event_startButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField port;
+    private javax.swing.JTextField portTextBox;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }
