@@ -1,5 +1,7 @@
 package ru.nnsu.pacman.common;
 
-public class Map {
+import java.io.Serializable;
+
+public class Map implements Serializable {
 
 }
