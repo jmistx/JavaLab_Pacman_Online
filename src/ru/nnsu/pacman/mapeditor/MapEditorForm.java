@@ -104,17 +104,23 @@ public class MapEditorForm extends javax.swing.JPanel {
     private void SetCurrentMap(Map map){
         this.map = map;
         CanvasBoard board = new CanvasBoard(map);
-        board.setBackground(Color.red);
         board.setBounds(0, 0, 500, 500);
         board.setPreferredSize(new Dimension(500, 500));
         board.setVisible(true);
         CanvasBoardContainer.setViewportView(board);
     }
     private void CreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateButtonActionPerformed
+        
+        try{
         final int width = Integer.parseInt(WidthText.getText());
         final int height = Integer.parseInt(HeightText.getText());
-        
         SetCurrentMap(new Map(width, height));
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+        
+        
     }//GEN-LAST:event_CreateButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed

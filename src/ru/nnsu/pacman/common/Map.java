@@ -28,4 +28,8 @@ public class Map implements Serializable {
     public int GetCellValue(int x,int y){
         return mapGrid[x][y];
     }
+
+    public void DeleteWall(int x, int y) {
+        mapGrid[x][y] = 0;
+    }
 }

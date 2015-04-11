@@ -29,15 +29,22 @@ public class CanvasBoard extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Integer But = e.getButton();
+                if (e.getButton()==1)
+                {
                 CanvasBoard that = (CanvasBoard) e.getSource();
-                
                 Integer cellWidth = that.getWidth() / map.getWidth();
                 Integer cellHeight = that.getHeight() / map.getHeight();
-                map.SetCellAsWall(e.getX()/cellWidth, e.getY()/cellHeight);
-                
-                that.setBackground(Color.pink);
+                map.SetCellAsWall(e.getX()/cellWidth, e.getY()/cellHeight); 
                 that.repaint();
+                }
+                else
+                {
+                CanvasBoard that = (CanvasBoard) e.getSource();
+                Integer cellWidth = that.getWidth() / map.getWidth();
+                Integer cellHeight = that.getHeight() / map.getHeight();
+                map.DeleteWall(e.getX()/cellWidth, e.getY()/cellHeight); 
+                that.repaint();
+                }
             }
         });
 
@@ -46,19 +53,26 @@ public class CanvasBoard extends JPanel {
     private void drawMap(Graphics g) {
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
-        
+       
+         
         for (Integer x = 0; x < map.getWidth(); x++){
+          
             for (Integer y = 0; y < map.getHeight(); y++){
+                
                 Integer value = map.GetCellValue(x, y);
                 if( value == 1){
-                    g.setColor(Color.green);
+                    g.setColor(Color.blue);
                 }
                 else {
-                    g.setColor(Color.black);
+                    g.setColor(Color.white);
                 }
                 g.fillRect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+                g.setColor(Color.black);
+                g.drawLine(0, y*cellHeight, cellWidth*this.getWidth(), y*cellHeight);
             }
-        }
+            g.setColor(Color.black);
+            g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
+        }  
     }
 
 }
