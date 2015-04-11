@@ -16,6 +16,13 @@ public class Map implements Serializable {
         this.name = name;
     }
     
+    public final String getName(){
+        return name;
+    }
+    
+    public final void setName(String newName){
+        this.name = newName;
+    }
     public final int getWidth(){
         return width;
     }
