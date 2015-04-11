@@ -76,9 +76,9 @@ public class ServerStartForm extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         int port = Integer.parseInt(portTextBox.getText());
-        PlayersDto dto = new PlayersDto();
+        AdminDto dto = new AdminDto();
         dto.setPort(port);
-        navigator.navigateToPlayers(dto);
+        navigator.navigateToAdmin(dto);
     }//GEN-LAST:event_startButtonActionPerformed
 
 

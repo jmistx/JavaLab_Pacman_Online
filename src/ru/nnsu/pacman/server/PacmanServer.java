@@ -9,20 +9,20 @@ public class PacmanServer extends JFrame {
 
     private CardLayout cards;
     private JPanel cardHolder;
-    private static final String startWindowCard = "startWindow";
-    private static final String playersWindowCard = "playersWindow";
     private Navigator navigator;
 
     public class Navigator {
-
+        private static final String startWindowCard = "startWindow";
+        private static final String playersWindowCard = "playersWindow";
+    
         private final CardLayout cards;
         private final ServerStartForm serverStartForm;
-        private final StartedServerForm startedServerForm;
+        private final AdminServerForm startedServerForm;
 
         public Navigator(CardLayout cards, JPanel cardHolder) {
             this.cards = cards;
             serverStartForm = new ServerStartForm(this);
-            startedServerForm = new StartedServerForm();
+            startedServerForm = new AdminServerForm();
             cardHolder.add(serverStartForm, startWindowCard);
             cardHolder.add(startedServerForm, playersWindowCard);
         }
@@ -31,7 +31,7 @@ public class PacmanServer extends JFrame {
             cards.show(cardHolder, startWindowCard);
         }
 
-        public void navigateToPlayers(PlayersDto dto) {
+        public void navigateToAdmin(AdminDto dto) {
             startedServerForm.Navigate(dto);
             cards.show(cardHolder, playersWindowCard);
         }

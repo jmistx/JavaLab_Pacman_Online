@@ -1,6 +1,6 @@
 package ru.nnsu.pacman.server;
 
-public class PlayersDto {
+public class AdminDto {
     private int port;
     
     public int getPort(){
