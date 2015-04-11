@@ -1,6 +1,8 @@
 package ru.nnsu.pacman.common;
 
-public class PlayerMessage {
+import java.io.Serializable;
+
+public class PlayerMessage implements Serializable {
     private String nickName;
 
     public String getNickName() {

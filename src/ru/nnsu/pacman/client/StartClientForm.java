@@ -4,12 +4,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ru.nnsu.pacman.client.ClientNavigator;
+import ru.nnsu.pacman.common.PlayerMessage;
 import ru.nnsu.pacman.server.PacmanServer;
 
 public class StartClientForm extends javax.swing.JPanel {
@@ -107,8 +109,10 @@ public class StartClientForm extends javax.swing.JPanel {
             Socket socket = new Socket(ipAddress, serverPort); // создаем сокет используя IP-адрес и порт сервера.
             System.out.println("Yes! I just got hold of the program.");
             try (OutputStream sout = socket.getOutputStream()) {
-                DataOutputStream out = new DataOutputStream(sout);
-                out.writeUTF(nickName);
+                ObjectOutputStream out = new ObjectOutputStream(sout);
+                PlayerMessage message = new PlayerMessage();
+                message.setNickName(nickName);
+                out.writeObject(message);
                 out.flush();
                 navigator.navigateToAdmin(clientInfo);
             }

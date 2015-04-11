@@ -26,7 +26,6 @@ class ConnectionProcesser implements Runnable {
         System.out.println("Sombody connected");
         try {
             ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
             PlayerMessage message = (PlayerMessage) socketIn.readObject();
             userListModel.addElement(message.getNickName());
         } catch (IOException ex) {
