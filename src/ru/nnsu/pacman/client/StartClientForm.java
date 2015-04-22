@@ -102,25 +102,10 @@ public class StartClientForm extends javax.swing.JPanel {
         int serverPort = Integer.parseInt(portTextBox.getText());
         String address = serverTextBox.getText();
         String nickName = nickNameTextBox.getText();
+        GameClient client = new GameClient(address, serverPort);
+        client.Authorize(nickName);
         ClientDto clientInfo = new ClientDto();
-        try {
-            InetAddress ipAddress = InetAddress.getByName(address); // создаем объект который отображает вышеописанный IP-адрес.
-            System.out.println("Any of you heard of a socket with IP address " + address + " and port " + serverPort + "?");
-            Socket socket = new Socket(ipAddress, serverPort); // создаем сокет используя IP-адрес и порт сервера.
-            System.out.println("Yes! I just got hold of the program.");
-            try (OutputStream sout = socket.getOutputStream()) {
-                ObjectOutputStream out = new ObjectOutputStream(sout);
-                PlayerMessage message = new PlayerMessage();
-                message.setNickName(nickName);
-                out.writeObject(message);
-                out.flush();
-                navigator.navigateToAdmin(clientInfo);
-            }
-        } catch (java.net.ConnectException x) {
-            System.out.println("Connect refused");
-        } catch (IOException ex) {
-            Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        navigator.navigateToAdmin(clientInfo);
     }//GEN-LAST:event_btnConnectActionPerformed
 
 
