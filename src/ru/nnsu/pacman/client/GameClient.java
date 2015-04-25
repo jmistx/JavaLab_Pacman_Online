@@ -43,8 +43,6 @@ public class GameClient {
             ObjectOutputStream out = GetObjectOutputStream();  
             out.writeObject(message);
             out.flush();
-            out.reset();
-            //out.close();
 
         } catch (java.net.ConnectException x) {
             System.out.println("Connect refused");
@@ -71,6 +69,13 @@ public class GameClient {
 
     void SetPort(int serverPort) {
         this.serverPort = serverPort;
+    }
+
+    void CreateGame(String map) {
+        PlayerMessage message = new PlayerMessage();
+        message.setActionCreateGame();
+        message.setMap(map);
+        SendMessage(message);
     }
 
 }

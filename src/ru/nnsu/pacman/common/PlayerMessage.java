@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class PlayerMessage implements Serializable {
     private String nickName;
     private String action;
+    private String map;
 
     public String getNickName() {
         return nickName;
@@ -20,6 +21,14 @@ public class PlayerMessage implements Serializable {
 
     public String getAction() {
         return this.action;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+    
+    public String getMap(){
+        return this.map;
     }
 
 }

@@ -24,6 +24,8 @@ public class CreateGameForm extends javax.swing.JPanel {
     private void initComponents() {
 
         CreateGameButton = new javax.swing.JButton();
+        MapComboBox = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
 
         CreateGameButton.setText("Создать игру");
         CreateGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -32,30 +34,44 @@ public class CreateGameForm extends javax.swing.JPanel {
             }
         });
 
+        MapComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Lost Temple", "Dish hample", "Cave riddings" }));
+
+        jLabel1.setText("Выберите карту");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(CreateGameButton)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CreateGameButton)
+                    .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(CreateGameButton)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
-        gameClient.CreateGame();
+        String current = MapComboBox.getModel().getSelectedItem().toString();
+        gameClient.CreateGame(current);
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreateGameButton;
+    private javax.swing.JComboBox MapComboBox;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

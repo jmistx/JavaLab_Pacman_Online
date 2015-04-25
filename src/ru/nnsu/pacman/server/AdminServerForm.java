@@ -20,7 +20,7 @@ public class AdminServerForm extends javax.swing.JPanel {
 
         DefaultListModel userListModel = new DefaultListModel();
         playersListBox.setModel(userListModel);
-        TableModel gameTableModel = new DefaultTableModel(3, 3);
+        DefaultTableModel gameTableModel = new DefaultTableModel(0, 1);
         gamesTable.setModel(gameTableModel);
         viewModel = new AdminServerFormViewModel(userListModel, gameTableModel);
     }

@@ -31,7 +31,7 @@ class ConnectionProcesser implements Runnable {
             
             PlayerMessage message2 = (PlayerMessage) socketIn.readObject();
             if (message2.getAction().equals("Create_Game")) {
-                viewModel.AddGame();
+                viewModel.AddGame(message2.getMap());
             }
         } catch (IOException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
