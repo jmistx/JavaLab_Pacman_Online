@@ -9,46 +9,45 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import ru.nnsu.pacman.common.PlayerMessage;
 
-/**
- *
- * @author JM
- */
 public class GameClient {
 
-    private final String address;
-    private final int serverPort;
+    private String address;
+    private int serverPort;
     private Socket socket;
+    private OutputStream outputStream;
 
-    GameClient(String address, int serverPort) {
-        this.address = address;
-        this.serverPort = serverPort;
+    GameClient() {
     }
 
-    OutputStream GetSocketOutputStream() throws IOException {
+    Socket GetSocket() throws IOException {
         if (socket != null) {
-            return socket.getOutputStream();
+            return socket;
         }
         InetAddress ipAddress = InetAddress.getByName(address);
         System.out.println("Try to connect with IP address " + address + " and port " + serverPort + "?");
         socket = new Socket(ipAddress, serverPort);
         System.out.println("Connected.");
-        return socket.getOutputStream();
+        return socket;
     }
-    
+    OutputStream GetSocketOutputStream() throws IOException {
+        return GetSocket().getOutputStream();
+    }
+
     void SendMessage(PlayerMessage message) {
         try {
-            try (OutputStream sout = GetSocketOutputStream()) {
-                ObjectOutputStream out = new ObjectOutputStream(sout);
-                out.writeObject(message);
-                out.flush();
-            }
+            OutputStream sout = GetSocket().getOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(sout);  
+            out.writeObject(message);
+            out.flush();
+            out.reset();
+            //out.close();
+
         } catch (java.net.ConnectException x) {
             System.out.println("Connect refused");
         } catch (IOException ex) {
             Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
-    
 
     void Authorize(String nickName) {
         PlayerMessage message = new PlayerMessage();
@@ -57,7 +56,17 @@ public class GameClient {
     }
 
     void CreateGame() {
-            
+        PlayerMessage message = new PlayerMessage();
+        message.setActionCreateGame();
+        SendMessage(message);
+    }
+
+    void SetAdress(String address) {
+        this.address = address;
+    }
+
+    void SetPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 
 }

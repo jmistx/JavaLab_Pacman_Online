@@ -19,7 +19,7 @@ public class PacmanClient extends JFrame  {
         cardHolder = new JPanel();
         cards = new CardLayout();
         cardHolder.setLayout(cards);
-        navigator = new ClientNavigator(cards, cardHolder);
+        navigator = new ClientNavigator(cards, cardHolder, new GameClient());
 
         add(cardHolder);
         pack();

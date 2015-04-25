@@ -14,11 +14,11 @@ import javax.swing.DefaultListModel;
 class ConnectionProcesser implements Runnable {
 
     private final Socket socket;
-    private final DefaultListModel userListModel;
+    private final AdminServerFormViewModel viewModel;
 
-    ConnectionProcesser(Socket socket, DefaultListModel userListModel) {
+    ConnectionProcesser(Socket socket, AdminServerFormViewModel viewModel) {
         this.socket = socket;
-        this.userListModel = userListModel;
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -27,7 +27,13 @@ class ConnectionProcesser implements Runnable {
         try {
             ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
             PlayerMessage message = (PlayerMessage) socketIn.readObject();
-            userListModel.addElement(message.getNickName());
+            viewModel.AddUser(message.getNickName());
+            
+            ObjectInputStream socketIn1 = new ObjectInputStream(socket.getInputStream());
+            PlayerMessage message2 = (PlayerMessage) socketIn1.readObject();
+            if (message2.getAction() == "Create_Game") {
+                viewModel.AddGame();
+            }
         } catch (IOException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

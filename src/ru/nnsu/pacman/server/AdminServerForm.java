@@ -8,15 +8,21 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class AdminServerForm extends javax.swing.JPanel {
 
-    private final DefaultListModel userListModel;
+    private final AdminServerFormViewModel viewModel;
 
     public AdminServerForm() {
         initComponents();
-        userListModel = new DefaultListModel();
+
+        DefaultListModel userListModel = new DefaultListModel();
         playersListBox.setModel(userListModel);
+        TableModel gameTableModel = new DefaultTableModel(3, 3);
+        gamesTable.setModel(gameTableModel);
+        viewModel = new AdminServerFormViewModel(userListModel, gameTableModel);
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +36,7 @@ public class AdminServerForm extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        gamesTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         jScrollPane1.setViewportView(playersListBox);
@@ -60,7 +66,7 @@ public class AdminServerForm extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Игроки на сервере", jPanel1);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        gamesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Марат", "Lost Temple", null},
                 {"Андрейка", "Closed Town", null},
@@ -79,7 +85,7 @@ public class AdminServerForm extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(gamesTable);
 
         jLabel2.setText("Игры на сервере");
 
@@ -131,6 +137,7 @@ public class AdminServerForm extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable gamesTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -138,26 +145,25 @@ public class AdminServerForm extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JList playersListBox;
     // End of variables declaration//GEN-END:variables
 
-    private void connect(final int port) {
+    private void listen(final int port) {
 
         Thread connectionHolderThread = new Thread() {
             @Override
             public void run() {
                 ServerSocket serverSocket = null;
+                try {
+                    serverSocket = new ServerSocket(port);
+                } catch (IOException ex) {
+                    Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 while (true) {
-                    try {
-                        serverSocket = new ServerSocket(port);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                     try {
                         System.out.println("Waiting for a client...");
                         Socket socket = serverSocket.accept();
-                        ConnectionProcesser processer = new ConnectionProcesser(socket, userListModel);
+                        ConnectionProcesser processer = new ConnectionProcesser(socket, viewModel);
                         Thread processerThread = new Thread(processer);
                         processerThread.start();
                     } catch (IOException ex) {
@@ -172,6 +178,6 @@ public class AdminServerForm extends javax.swing.JPanel {
     }
 
     void Navigate(AdminDto dto) {
-        connect(dto.getPort());
+        listen(dto.getPort());
     }
 }

@@ -16,10 +16,12 @@ import ru.nnsu.pacman.server.PacmanServer;
 
 public class StartClientForm extends javax.swing.JPanel {
      private final ClientNavigator navigator;
+    private final GameClient client;
 
-    public StartClientForm(ClientNavigator navigator) {
+    public StartClientForm(ClientNavigator navigator, GameClient client) {
         initComponents();
         this.navigator = navigator;
+        this.client = client;
     }
     
     @SuppressWarnings("unchecked")
@@ -102,7 +104,9 @@ public class StartClientForm extends javax.swing.JPanel {
         int serverPort = Integer.parseInt(portTextBox.getText());
         String address = serverTextBox.getText();
         String nickName = nickNameTextBox.getText();
-        GameClient client = new GameClient(address, serverPort);
+        //GameClient client = new GameClient(address, serverPort);
+        client.SetAdress(address);
+        client.SetPort(serverPort);
         client.Authorize(nickName);
         ClientDto clientInfo = new ClientDto();
         navigator.navigateToAdmin(clientInfo);

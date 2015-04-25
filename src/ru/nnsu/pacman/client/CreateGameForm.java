@@ -5,12 +5,13 @@ package ru.nnsu.pacman.client;
  * @author Demon
  */
 public class CreateGameForm extends javax.swing.JPanel {
+    private final ClientNavigator navigator;
+    private final GameClient gameClient;
 
-    /**
-     * Creates new form CreateGameForm
-     */
-    public CreateGameForm() {
+    CreateGameForm(ClientNavigator navigator, GameClient gameClient) {
         initComponents();
+        this.navigator = navigator;
+        this.gameClient = gameClient;
     }
 
     /**
@@ -25,6 +26,11 @@ public class CreateGameForm extends javax.swing.JPanel {
         CreateGameButton = new javax.swing.JButton();
 
         CreateGameButton.setText("Создать игру");
+        CreateGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateGameButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -43,6 +49,10 @@ public class CreateGameForm extends javax.swing.JPanel {
                 .addContainerGap(60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
+        gameClient.CreateGame();
+    }//GEN-LAST:event_CreateGameButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

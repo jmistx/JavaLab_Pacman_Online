@@ -11,11 +11,11 @@ public class ClientNavigator {
     private final CreateGameForm createGameForm;
     private final JPanel cardHolder;
 
-    public ClientNavigator(CardLayout cards, JPanel cardHolder) {
+    public ClientNavigator(CardLayout cards, JPanel cardHolder, GameClient gameClient) {
         this.cards = cards;
         this.cardHolder = cardHolder;
-        clientStartForm = new StartClientForm(this);
-        createGameForm = new CreateGameForm();
+        clientStartForm = new StartClientForm(this, gameClient);
+        createGameForm = new CreateGameForm(this, gameClient);
         cardHolder.add(clientStartForm, startWindowCard);
         cardHolder.add(createGameForm, playersWindowCard);
     }
