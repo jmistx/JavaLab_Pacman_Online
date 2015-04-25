@@ -1,5 +1,12 @@
 package ru.nnsu.pacman.client;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author Demon
@@ -12,6 +19,17 @@ public class CreateGameForm extends javax.swing.JPanel {
         initComponents();
         this.navigator = navigator;
         this.gameClient = gameClient;
+        ArrayList<String> filesList = new ArrayList<String>();
+        File folder = new File("maps");
+        File[] listOfFiles = folder.listFiles();
+            for (int i = 0; i < listOfFiles.length; i++) {
+              if (listOfFiles[i].isFile()) {
+                  filesList.add(listOfFiles[i].getName());
+              }
+            }
+        String[] files = filesList.toArray(new String[filesList.size()]);
+        DefaultComboBoxModel mapComboboxModel = new DefaultComboBoxModel(files);
+        this.MapComboBox.setModel(mapComboboxModel);
     }
 
     /**
