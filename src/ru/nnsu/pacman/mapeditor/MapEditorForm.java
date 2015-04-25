@@ -6,12 +6,13 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
+import ru.nnsu.pacman.common.MapHolder;
 
 
 public class MapEditorForm extends javax.swing.JPanel {
     
     private Map map;
-    private  MapSaver mapSaver;
+    private  MapHolder mapSaver;
     
     public MapEditorForm() {
         initComponents();
@@ -135,7 +136,7 @@ public class MapEditorForm extends javax.swing.JPanel {
     }//GEN-LAST:event_CreateButtonActionPerformed
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-        mapSaver = new MapSaver();
+        mapSaver = new MapHolder();
         if (!"".equals(MapName.getText())){
         map.setName(MapName.getText());}
         JFileChooser fileChooser = new JFileChooser();
@@ -151,7 +152,7 @@ public class MapEditorForm extends javax.swing.JPanel {
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void OpenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenButtonActionPerformed
-        mapSaver = new MapSaver();
+        mapSaver = new MapHolder();
         
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
