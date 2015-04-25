@@ -29,9 +29,8 @@ class ConnectionProcesser implements Runnable {
             PlayerMessage message = (PlayerMessage) socketIn.readObject();
             viewModel.AddUser(message.getNickName());
             
-            ObjectInputStream socketIn1 = new ObjectInputStream(socket.getInputStream());
-            PlayerMessage message2 = (PlayerMessage) socketIn1.readObject();
-            if (message2.getAction() == "Create_Game") {
+            PlayerMessage message2 = (PlayerMessage) socketIn.readObject();
+            if (message2.getAction().equals("Create_Game")) {
                 viewModel.AddGame();
             }
         } catch (IOException ex) {

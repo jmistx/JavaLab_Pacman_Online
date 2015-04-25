@@ -14,7 +14,7 @@ public class GameClient {
     private String address;
     private int serverPort;
     private Socket socket;
-    private OutputStream outputStream;
+    private ObjectOutputStream outputStream;
 
     GameClient() {
     }
@@ -29,14 +29,18 @@ public class GameClient {
         System.out.println("Connected.");
         return socket;
     }
-    OutputStream GetSocketOutputStream() throws IOException {
-        return GetSocket().getOutputStream();
+    ObjectOutputStream GetObjectOutputStream() throws IOException {
+        if (outputStream != null) {
+            return outputStream;
+        }
+        OutputStream sout = GetSocket().getOutputStream();
+        outputStream = new ObjectOutputStream(sout); 
+        return outputStream;
     }
 
     void SendMessage(PlayerMessage message) {
         try {
-            OutputStream sout = GetSocket().getOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(sout);  
+            ObjectOutputStream out = GetObjectOutputStream();  
             out.writeObject(message);
             out.flush();
             out.reset();
