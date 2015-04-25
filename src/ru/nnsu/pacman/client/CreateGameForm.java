@@ -15,21 +15,12 @@ public class CreateGameForm extends javax.swing.JPanel {
     private final ClientNavigator navigator;
     private final GameClient gameClient;
 
-    CreateGameForm(ClientNavigator navigator, GameClient gameClient) {
+    CreateGameForm(ClientNavigator navigator, GameClient gameClient, CreateGameViewModel viewModel) {
         initComponents();
         this.navigator = navigator;
         this.gameClient = gameClient;
-        ArrayList<String> filesList = new ArrayList<String>();
-        File folder = new File("maps");
-        File[] listOfFiles = folder.listFiles();
-            for (int i = 0; i < listOfFiles.length; i++) {
-              if (listOfFiles[i].isFile()) {
-                  filesList.add(listOfFiles[i].getName());
-              }
-            }
-        String[] files = filesList.toArray(new String[filesList.size()]);
-        DefaultComboBoxModel mapComboboxModel = new DefaultComboBoxModel(files);
-        this.MapComboBox.setModel(mapComboboxModel);
+
+        this.MapComboBox.setModel(viewModel.getMapModel());
     }
 
     /**

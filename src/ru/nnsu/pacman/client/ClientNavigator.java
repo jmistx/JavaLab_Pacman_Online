@@ -15,7 +15,7 @@ public class ClientNavigator {
         this.cards = cards;
         this.cardHolder = cardHolder;
         clientStartForm = new StartClientForm(this, gameClient);
-        createGameForm = new CreateGameForm(this, gameClient);
+        createGameForm = new CreateGameForm(this, gameClient, new CreateGameViewModel());
         cardHolder.add(clientStartForm, startWindowCard);
         cardHolder.add(createGameForm, playersWindowCard);
     }
