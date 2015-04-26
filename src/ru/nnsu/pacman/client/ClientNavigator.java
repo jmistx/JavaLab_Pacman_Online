@@ -6,9 +6,12 @@ import javax.swing.JPanel;
 public class ClientNavigator {
     private static final String startWindowCard = "startWindow";
     private static final String playersWindowCard = "playersWindow";
+    private static final String gameWindowCard = "gameWindow";
+    
     private final CardLayout cards;
     private final StartClientForm clientStartForm;
     private final CreateGameForm createGameForm;
+    private final GameForm gameForm;
     private final JPanel cardHolder;
 
     public ClientNavigator(CardLayout cards, JPanel cardHolder, GameClient gameClient) {
@@ -16,8 +19,10 @@ public class ClientNavigator {
         this.cardHolder = cardHolder;
         clientStartForm = new StartClientForm(this, gameClient);
         createGameForm = new CreateGameForm(this, gameClient, new CreateGameViewModel());
+        gameForm = new GameForm();
         cardHolder.add(clientStartForm, startWindowCard);
         cardHolder.add(createGameForm, playersWindowCard);
+        cardHolder.add(gameForm, gameWindowCard);
     }
 
     public void navigateToStart() {
@@ -27,5 +32,8 @@ public class ClientNavigator {
     public void navigateToAdmin(ClientDto dto) {
         cards.show(cardHolder, playersWindowCard);
     }
-
+    
+    public void navigateToGame() {
+        cards.show(cardHolder, gameWindowCard);
+    }
 }

@@ -1,16 +1,5 @@
 package ru.nnsu.pacman.client;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-
-/**
- *
- * @author Demon
- */
 public class CreateGameForm extends javax.swing.JPanel {
     private final ClientNavigator navigator;
     private final GameClient gameClient;
@@ -75,6 +64,7 @@ public class CreateGameForm extends javax.swing.JPanel {
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         String current = MapComboBox.getModel().getSelectedItem().toString();
         gameClient.CreateGame(current);
+        navigator.navigateToGame();
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
 

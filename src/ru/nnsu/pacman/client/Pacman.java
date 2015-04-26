@@ -5,13 +5,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class PacmanClient extends JFrame  {
+public class Pacman extends JFrame  {
     
    private CardLayout cards;
     private JPanel cardHolder;
     private ClientNavigator navigator;
 
-    public PacmanClient() {
+    public Pacman() {
         initUI();
     }
 
@@ -35,7 +35,7 @@ public class PacmanClient extends JFrame  {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                PacmanClient ex = new PacmanClient();
+                Pacman ex = new Pacman();
                 ex.setVisible(true);
             }
         });

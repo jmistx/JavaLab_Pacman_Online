@@ -104,7 +104,6 @@ public class StartClientForm extends javax.swing.JPanel {
         int serverPort = Integer.parseInt(portTextBox.getText());
         String address = serverTextBox.getText();
         String nickName = nickNameTextBox.getText();
-        //GameClient client = new GameClient(address, serverPort);
         client.SetAdress(address);
         client.SetPort(serverPort);
         client.Authorize(nickName);
