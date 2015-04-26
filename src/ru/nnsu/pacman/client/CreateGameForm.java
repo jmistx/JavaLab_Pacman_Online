@@ -3,11 +3,13 @@ package ru.nnsu.pacman.client;
 public class CreateGameForm extends javax.swing.JPanel {
     private final ClientNavigator navigator;
     private final GameClient gameClient;
+    private final CreateGameViewModel viewModel;
 
     CreateGameForm(ClientNavigator navigator, GameClient gameClient, CreateGameViewModel viewModel) {
         initComponents();
         this.navigator = navigator;
         this.gameClient = gameClient;
+        this.viewModel = viewModel;
 
         this.MapComboBox.setModel(viewModel.getMapModel());
     }
@@ -64,7 +66,7 @@ public class CreateGameForm extends javax.swing.JPanel {
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         String current = MapComboBox.getModel().getSelectedItem().toString();
         gameClient.CreateGame(current);
-        navigator.navigateToGame();
+        navigator.navigateToGame(new StartGameDto(viewModel.getSelectedMap()));
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
 

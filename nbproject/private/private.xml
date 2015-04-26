@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/server/ConnectionProcesser.java</file>
-            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/PacmanClient.java</file>
-            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/GameClient.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/mapeditor/CanvasBoard.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/ClientNavigator.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/GameForm.java</file>
+            <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/StartGameDto.java</file>
             <file>file:/D:/Projects/Учёба/Java/Pacman/src/ru/nnsu/pacman/client/CreateGameForm.java</file>
         </group>
     </open-files>

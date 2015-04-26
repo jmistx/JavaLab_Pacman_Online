@@ -33,7 +33,8 @@ public class ClientNavigator {
         cards.show(cardHolder, playersWindowCard);
     }
     
-    public void navigateToGame() {
+    public void navigateToGame(StartGameDto dto) {
         cards.show(cardHolder, gameWindowCard);
+        gameForm.navigate(dto);
     }
 }

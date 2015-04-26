@@ -1,18 +1,22 @@
 package ru.nnsu.pacman.client;
 
-/**
- *
- * @author JM
- */
-public class GameForm extends javax.swing.JPanel {
+import java.awt.Color;
+import java.awt.Graphics;
+import ru.nnsu.pacman.common.Map;
 
-    /**
-     * Creates new form GameForm
-     */
+public class GameForm extends javax.swing.JPanel {
+    private Map map;
+
     public GameForm() {
         initComponents();
     }
 
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        drawMap(g);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,4 +41,35 @@ public class GameForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    private void drawMap(Graphics g) {
+        if (this.map == null) return;
+        
+        Integer cellWidth = this.getWidth() / map.getWidth();
+        Integer cellHeight = this.getHeight() / map.getHeight();
+       
+         
+        for (Integer x = 0; x < map.getWidth(); x++){
+          
+            for (Integer y = 0; y < map.getHeight(); y++){
+                
+                Integer value = map.getCellValue(x, y);
+                if( value == 1){
+                    g.setColor(Color.blue);
+                }
+                else {
+                    g.setColor(Color.white);
+                }
+                g.fillRect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+                g.setColor(Color.black);
+                g.drawLine(0, y*cellHeight, cellWidth*this.getWidth(), y*cellHeight);
+            }
+            g.setColor(Color.black);
+            g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
+        } 
+    }
+
+    void navigate(StartGameDto dto) {
+        this.map = dto.getMap();
+    }
 }

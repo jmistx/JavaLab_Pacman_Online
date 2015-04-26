@@ -3,6 +3,8 @@ package ru.nnsu.pacman.client;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
@@ -11,8 +13,12 @@ import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapHolder;
 
 class CreateGameViewModel {
-
+    private HashMap<String, Map> maps;
+    private DefaultComboBoxModel mapModel;
+    
     ComboBoxModel getMapModel() {
+        maps = new HashMap<>();
+        
         ArrayList<String> filesList = new ArrayList<>();
         MapHolder mapHolder = new MapHolder();
         File folder = new File("maps");
@@ -23,6 +29,7 @@ class CreateGameViewModel {
                 try {
                     Map map = mapHolder.Open(mapFile.getAbsoluteFile());
                     filesList.add(map.getName());
+                    maps.put(map.getName(), map);
                 } catch (IOException ex) {
                     Logger.getLogger(CreateGameViewModel.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -31,6 +38,12 @@ class CreateGameViewModel {
             }
         }
         String[] files = filesList.toArray(new String[filesList.size()]);
-        return new DefaultComboBoxModel(files);
+        mapModel = new DefaultComboBoxModel(files);
+        return mapModel; 
+    }
+    
+    Map getSelectedMap() {
+        String selectedMapName = mapModel.getSelectedItem().toString();
+        return maps.get(selectedMapName);
     }
 }
