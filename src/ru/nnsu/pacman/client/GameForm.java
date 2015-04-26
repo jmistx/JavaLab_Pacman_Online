@@ -1,75 +1,19 @@
 package ru.nnsu.pacman.client;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import ru.nnsu.pacman.common.Map;
 
 public class GameForm extends javax.swing.JPanel {
-    private Map map;
-    private int selfPacmanX;
-    private int selfPacmanY;
 
     public GameForm() {
         initComponents();
-        
-        this.addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                int newSelfPacmanX = selfPacmanX;
-                int newSelfPacmanY = selfPacmanY;
-                if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
-                    newSelfPacmanX = selfPacmanX - 1;
-                    if (newSelfPacmanX == -1) {
-                        newSelfPacmanX = map.getWidth() - 1;
-                    }
-                }
-                if ( e.getKeyCode() == KeyEvent.VK_UP ){
-                    newSelfPacmanY = selfPacmanY - 1;
-                    if (newSelfPacmanY == -1) {
-                        newSelfPacmanY = map.getHeight() - 1;
-                    }
-                }
-                if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
-                    newSelfPacmanX = selfPacmanX + 1;
-                    if (newSelfPacmanX == map.getWidth()) {
-                        newSelfPacmanX = 0;
-                    }
-                }
-                if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
-                    newSelfPacmanY = selfPacmanY + 1;
-                    if (newSelfPacmanY == map.getHeight()) {
-                        newSelfPacmanY = 0;
-                    }
-                }
-                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) == 0) {
-                    selfPacmanX = newSelfPacmanX;
-                    selfPacmanY = newSelfPacmanY;
-                }
-                GameForm source = (GameForm)e.getSource();
-                source.repaint();
-            }
-        });
         this.setFocusable(true);
     }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        drawMap(g);
-        drawPacman(g, selfPacmanX, selfPacmanY);
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,68 +23,66 @@ public class GameForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        GamePanelContainer = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 509, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 34, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout GamePanelContainerLayout = new javax.swing.GroupLayout(GamePanelContainer);
+        GamePanelContainer.setLayout(GamePanelContainerLayout);
+        GamePanelContainerLayout.setHorizontalGroup(
+            GamePanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        GamePanelContainerLayout.setVerticalGroup(
+            GamePanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(GamePanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(GamePanelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel GamePanelContainer;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
-    private void drawMap(Graphics g) {
-        if (this.map == null) return;
-        
-        Integer cellWidth = this.getWidth() / map.getWidth();
-        Integer cellHeight = this.getHeight() / map.getHeight();
-       
-         
-        for (Integer x = 0; x < map.getWidth(); x++){
-          
-            for (Integer y = 0; y < map.getHeight(); y++){
-                
-                Integer value = map.getCellValue(x, y);
-                if( value == 1){
-                    g.setColor(Color.blue);
-                }
-                else {
-                    g.setColor(Color.white);
-                }
-                g.fillRect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
-                g.setColor(Color.black);
-                g.drawLine(0, y*cellHeight, cellWidth*this.getWidth(), y*cellHeight);
-            }
-            g.setColor(Color.black);
-            g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
-        } 
-    }
-    
-    void drawPacman(Graphics g, int charX, int charY) {
-        Integer cellWidth = this.getWidth() / map.getWidth();
-        Integer cellHeight = this.getHeight() / map.getHeight();
-                      
-        int pacmanWidth = (int) (cellWidth/1.5);
-        int pacmanHeight = (int) (cellHeight/1.5);
-        
-        int pacmanX = cellWidth * charX + (cellWidth - pacmanWidth)/2;
-        int pacmanY = cellHeight * charY + (cellHeight - pacmanHeight)/2;
-        
-        g.setColor(Color.yellow);
-        g.fillOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
-        g.setColor(Color.black);
-        g.drawOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
-        
-    }
-
     void navigate(StartGameDto dto) {
-        this.map = dto.getMap();
-        this.requestFocusInWindow();
+        this.GamePanelContainer.removeAll();
+        GamePanel gamePanel = new GamePanel();
+        this.GamePanelContainer.add(gamePanel);
+        gamePanel.setBounds(0, 0, 500, 500);
+        gamePanel.setPreferredSize(new Dimension(500, 500));
+        gamePanel.setVisible(true);
+        gamePanel.navigate(dto);
     }
 }
