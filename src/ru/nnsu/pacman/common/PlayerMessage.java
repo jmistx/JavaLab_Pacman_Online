@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class PlayerMessage implements Serializable {
     private String nickName;
     private String action;
-    private String map;
+    private Map map;
 
     public String getNickName() {
         return nickName;
@@ -23,11 +23,11 @@ public class PlayerMessage implements Serializable {
         return this.action;
     }
 
-    public void setMap(String map) {
+    public void setMap(Map map) {
         this.map = map;
     }
     
-    public String getMap(){
+    public Map getMap(){
         return this.map;
     }
 

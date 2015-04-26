@@ -38,8 +38,14 @@ class ConnectionProcesser implements Runnable {
                 viewModel.AddGame(message2.getMap());
             }
             if (message2.getAction().equals("Join_Game")) {
+                Game game = viewModel.joinAvailableGame();
                 ServerMessage answer = new ServerMessage();
-                answer.setMap(new Map(5,5, "Map"));
+                if (game == null) {
+                    answer.setMap(null);
+                }
+                else {
+                    answer.setMap(game.getMap());
+                }
                 socketOut.writeObject(answer);
             }
         } catch (IOException ex) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import ru.nnsu.pacman.common.Map;
 
 public class CreateGameForm extends javax.swing.JPanel {
     private final ClientNavigator navigator;
@@ -80,9 +81,9 @@ public class CreateGameForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
-        String current = MapComboBox.getModel().getSelectedItem().toString();
-        gameClient.CreateGame(current);
-        navigator.navigateToGame(new StartGameDto(viewModel.getSelectedMap()));
+        Map selectedMap = viewModel.getSelectedMap();
+        gameClient.CreateGame(selectedMap);
+        navigator.navigateToGame(new StartGameDto(selectedMap));
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
     private void JoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinGameActionPerformed

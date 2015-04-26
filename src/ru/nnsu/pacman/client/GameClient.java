@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.PlayerMessage;
 
 public class GameClient {
@@ -100,7 +101,7 @@ public class GameClient {
         this.serverPort = serverPort;
     }
 
-    void CreateGame(String map) {
+    void CreateGame(Map map) {
         PlayerMessage message = new PlayerMessage();
         message.setActionCreateGame();
         message.setMap(map);
