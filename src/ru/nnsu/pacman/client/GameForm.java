@@ -16,6 +16,7 @@ public class GameForm extends javax.swing.JPanel {
         super.paintComponent(g);
 
         drawMap(g);
+        drawPacman(g);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,6 +68,25 @@ public class GameForm extends javax.swing.JPanel {
             g.setColor(Color.black);
             g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
         } 
+    }
+    
+    void drawPacman(Graphics g) {
+        Integer cellWidth = this.getWidth() / map.getWidth();
+        Integer cellHeight = this.getHeight() / map.getHeight();
+        int charX = 4;
+        int charY = 4;
+                      
+        int pacmanWidth = (int) (cellWidth/1.5);
+        int pacmanHeight = (int) (cellHeight/1.5);
+        
+        int pacmanX = cellWidth * charX + (cellWidth - pacmanWidth)/2;
+        int pacmanY = cellHeight * charY + (cellHeight - pacmanHeight)/2;
+        
+        g.setColor(Color.yellow);
+        g.fillOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
+        g.setColor(Color.black);
+        g.drawOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
+        
     }
 
     void navigate(StartGameDto dto) {
