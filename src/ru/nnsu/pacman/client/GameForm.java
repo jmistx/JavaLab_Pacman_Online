@@ -26,17 +26,23 @@ public class GameForm extends javax.swing.JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                int newSelfPacmanX = selfPacmanX;
+                int newSelfPacmanY = selfPacmanY;
                 if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
-                    selfPacmanX-=1;
+                    newSelfPacmanX = selfPacmanX - 1;
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_UP ){
-                    selfPacmanY-=1;
+                    newSelfPacmanY = selfPacmanY - 1;
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
-                    selfPacmanX+=1;
+                    newSelfPacmanX = selfPacmanX + 1;
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
-                    selfPacmanY+=1;
+                    newSelfPacmanY = selfPacmanY + 1;
+                }
+                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) == 0) {
+                    selfPacmanX = newSelfPacmanX;
+                    selfPacmanY = newSelfPacmanY;
                 }
                 GameForm source = (GameForm)e.getSource();
                 source.repaint();
