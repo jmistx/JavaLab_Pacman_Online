@@ -1,11 +1,11 @@
 package ru.nnsu.pacman.client;
 
 import java.awt.event.KeyEvent;
+import java.util.Observable;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
-class GameState{
-
+class GameState extends Observable{
     public final static int MOVE_RIGHT = 1;
     public final static int MOVE_LEFT = 2;
     public final static int MOVE_UP = 3;
@@ -53,6 +53,9 @@ class GameState{
             map.SetCellValue(selfPacmanX, selfPacmanY, MapCell.EMPTY);
             score += 1;
         }
+        setChanged();
+        notifyObservers();
+        
     }
 
     GameState(Map map) {
@@ -62,5 +65,4 @@ class GameState{
     Map getMap() {
         return map;
     }
-
 }

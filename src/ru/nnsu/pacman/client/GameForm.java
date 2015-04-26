@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 import ru.nnsu.pacman.common.Map;
 
 public class GameForm extends javax.swing.JPanel {
@@ -24,18 +26,36 @@ public class GameForm extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        yourScore = new javax.swing.JLabel();
         GamePanelContainer = new javax.swing.JPanel();
+
+        jLabel1.setText("Твой счёт:");
+
+        yourScore.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(yourScore, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(388, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(yourScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel1.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout GamePanelContainerLayout = new javax.swing.GroupLayout(GamePanelContainer);
         GamePanelContainer.setLayout(GamePanelContainerLayout);
@@ -45,7 +65,7 @@ public class GameForm extends javax.swing.JPanel {
         );
         GamePanelContainerLayout.setVerticalGroup(
             GamePanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addGap(0, 351, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -73,7 +93,9 @@ public class GameForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel GamePanelContainer;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel yourScore;
     // End of variables declaration//GEN-END:variables
 
     void navigate(StartGameDto dto) {
@@ -85,5 +107,13 @@ public class GameForm extends javax.swing.JPanel {
         gamePanel.setPreferredSize(new Dimension(500, 500));
         gamePanel.setVisible(true);
         gamePanel.Init();
+        gameState.addObserver(new Observer(){
+
+            @Override
+            public void update(Observable o, Object arg) {
+                GameState state = (GameState)o;
+                yourScore.setText(String.valueOf(state.score));
+            }
+        });
     }
 }
