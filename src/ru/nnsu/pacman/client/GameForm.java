@@ -30,15 +30,27 @@ public class GameForm extends javax.swing.JPanel {
                 int newSelfPacmanY = selfPacmanY;
                 if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
                     newSelfPacmanX = selfPacmanX - 1;
+                    if (newSelfPacmanX == -1) {
+                        newSelfPacmanX = map.getWidth() - 1;
+                    }
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_UP ){
                     newSelfPacmanY = selfPacmanY - 1;
+                    if (newSelfPacmanY == -1) {
+                        newSelfPacmanY = map.getHeight() - 1;
+                    }
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
                     newSelfPacmanX = selfPacmanX + 1;
+                    if (newSelfPacmanX == map.getWidth()) {
+                        newSelfPacmanX = 0;
+                    }
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
                     newSelfPacmanY = selfPacmanY + 1;
+                    if (newSelfPacmanY == map.getHeight()) {
+                        newSelfPacmanY = 0;
+                    }
                 }
                 if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) == 0) {
                     selfPacmanX = newSelfPacmanX;
