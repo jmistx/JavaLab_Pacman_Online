@@ -61,6 +61,7 @@ public class GamePanel extends javax.swing.JPanel {
                     selfPacmanY = newSelfPacmanY;
                 }
                 if (map.getCellValue(selfPacmanX, selfPacmanY) == MapCell.PILL) {
+                    map.SetCellValue(selfPacmanX, selfPacmanY, MapCell.EMPTY);
                     score += 1;
                 }
                 selfGamePanel.repaint();
