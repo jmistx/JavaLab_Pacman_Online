@@ -12,7 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapHolder;
 
-class CreateGameViewModel {
+class ViewModelCreateGame {
     private HashMap<String, Map> maps;
     private DefaultComboBoxModel mapModel;
     
@@ -31,9 +31,9 @@ class CreateGameViewModel {
                     filesList.add(map.getName());
                     maps.put(map.getName(), map);
                 } catch (IOException ex) {
-                    Logger.getLogger(CreateGameViewModel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ViewModelCreateGame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(CreateGameViewModel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ViewModelCreateGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -5,13 +5,25 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import ru.nnsu.pacman.common.GameEvent;
 import ru.nnsu.pacman.common.Map;
 
-public class GameForm extends javax.swing.JPanel {
+public class FormGame extends javax.swing.JPanel {
 
-    public GameForm() {
+    private ClientNavigator navigator;
+
+    public FormGame() {
+        initComponents();
+        this.setFocusable(true);
+    }
+
+    FormGame(ClientNavigator navigator) {
+        this.navigator = navigator;
         initComponents();
         this.setFocusable(true);
     }
@@ -98,22 +110,40 @@ public class GameForm extends javax.swing.JPanel {
     private javax.swing.JLabel yourScore;
     // End of variables declaration//GEN-END:variables
 
-    void navigate(StartGameDto dto) {
+    void navigate(DtoStartGame dto) {
+        if (dto.getMap() == null) {
+            navigator.navigateToMainMenu();
+        }
         this.GamePanelContainer.removeAll();
-        GameState gameState = new GameState(dto.getMap());
-        GamePanel gamePanel = new GamePanel(gameState);
+        final GameClient gameClient = dto.getGameClient();
+        final GameState gameState = new GameState(dto.getMap(), gameClient);
+        PanelGame gamePanel = new PanelGame(gameState);
         this.GamePanelContainer.add(gamePanel);
         gamePanel.setBounds(0, 0, 500, 500);
         gamePanel.setPreferredSize(new Dimension(500, 500));
         gamePanel.setVisible(true);
         gamePanel.Init();
-        gameState.addObserver(new Observer(){
-
+        gameState.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                GameState state = (GameState)o;
+                GameState state = (GameState) o;
                 yourScore.setText(String.valueOf(state.score));
             }
         });
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        GameEvent event = gameClient.GetNextEvent();
+                        gameState.dispatchEvent(event);
+                        
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(FormGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        thread.start();
     }
 }

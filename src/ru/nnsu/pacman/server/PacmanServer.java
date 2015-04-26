@@ -16,13 +16,13 @@ public class PacmanServer extends JFrame {
         private static final String playersWindowCard = "playersWindow";
     
         private final CardLayout cards;
-        private final ServerStartForm serverStartForm;
-        private final AdminServerForm startedServerForm;
+        private final FormServerStart serverStartForm;
+        private final FormAdminServer startedServerForm;
 
         public Navigator(CardLayout cards, JPanel cardHolder) {
             this.cards = cards;
-            serverStartForm = new ServerStartForm(this);
-            startedServerForm = new AdminServerForm();
+            serverStartForm = new FormServerStart(this);
+            startedServerForm = new FormAdminServer();
             cardHolder.add(serverStartForm, startWindowCard);
             cardHolder.add(startedServerForm, playersWindowCard);
         }
@@ -31,7 +31,7 @@ public class PacmanServer extends JFrame {
             cards.show(cardHolder, startWindowCard);
         }
 
-        public void navigateToAdmin(AdminDto dto) {
+        public void navigateToAdmin(DtoAdmin dto) {
             startedServerForm.Navigate(dto);
             cards.show(cardHolder, playersWindowCard);
         }

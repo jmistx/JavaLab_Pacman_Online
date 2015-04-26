@@ -1,11 +1,14 @@
 package ru.nnsu.pacman.client;
 
+import ru.nnsu.pacman.common.GameEvent;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
+import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
-class GameState extends Observable{
+class GameState extends Observable {
+
     public final static int MOVE_RIGHT = 1;
     public final static int MOVE_LEFT = 2;
     public final static int MOVE_UP = 3;
@@ -15,6 +18,12 @@ class GameState extends Observable{
     public int selfPacmanX;
     public int selfPacmanY;
     public int score;
+    private final GameClient gameClient;
+
+    GameState(Map map, GameClient gameClient) {
+        this.map = map;
+        this.gameClient = gameClient;
+    }
 
     public void MoveCharacter(int direction) {
         int newSelfPacmanX = selfPacmanX;
@@ -53,16 +62,19 @@ class GameState extends Observable{
             map.SetCellValue(selfPacmanX, selfPacmanY, MapCell.EMPTY);
             score += 1;
         }
+        GameEvent gameEvent = new GameEvent();
+        gameEvent.setType(GameEvent.MOVE);
+        gameEvent.setPosition(selfPacmanX, selfPacmanY);
+        gameClient.SendEvent(gameEvent);
         setChanged();
         notifyObservers();
-        
-    }
-
-    GameState(Map map) {
-        this.map = map;
     }
 
     Map getMap() {
         return map;
+    }
+
+    void dispatchEvent(GameEvent event) {
+        JOptionPane.showMessageDialog(null, event.toString());
     }
 }

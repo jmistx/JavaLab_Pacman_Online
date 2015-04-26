@@ -11,18 +11,18 @@ import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class AdminServerForm extends javax.swing.JPanel {
+public class FormAdminServer extends javax.swing.JPanel {
 
-    private final AdminServerFormViewModel viewModel;
+    private final ViewModelAdminServerForm viewModel;
 
-    public AdminServerForm() {
+    public FormAdminServer() {
         initComponents();
 
         DefaultListModel userListModel = new DefaultListModel();
         playersListBox.setModel(userListModel);
         DefaultTableModel gameTableModel = new DefaultTableModel(0, 1);
         gamesTable.setModel(gameTableModel);
-        viewModel = new AdminServerFormViewModel(userListModel, gameTableModel);
+        viewModel = new ViewModelAdminServerForm(userListModel, gameTableModel);
     }
 
     @SuppressWarnings("unchecked")
@@ -157,7 +157,7 @@ public class AdminServerForm extends javax.swing.JPanel {
                 try {
                     serverSocket = new ServerSocket(port);
                 } catch (IOException ex) {
-                    Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FormServerStart.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 while (true) {
                     try {
@@ -167,7 +167,7 @@ public class AdminServerForm extends javax.swing.JPanel {
                         Thread processerThread = new Thread(processer);
                         processerThread.start();
                     } catch (IOException ex) {
-                        Logger.getLogger(ServerStartForm.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FormServerStart.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -177,7 +177,7 @@ public class AdminServerForm extends javax.swing.JPanel {
 
     }
 
-    void Navigate(AdminDto dto) {
+    void Navigate(DtoAdmin dto) {
         listen(dto.getPort());
     }
 }

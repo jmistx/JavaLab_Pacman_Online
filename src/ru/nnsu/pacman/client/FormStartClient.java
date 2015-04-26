@@ -14,11 +14,11 @@ import ru.nnsu.pacman.client.ClientNavigator;
 import ru.nnsu.pacman.common.PlayerMessage;
 import ru.nnsu.pacman.server.PacmanServer;
 
-public class StartClientForm extends javax.swing.JPanel {
+public class FormStartClient extends javax.swing.JPanel {
      private final ClientNavigator navigator;
     private final GameClient client;
 
-    public StartClientForm(ClientNavigator navigator, GameClient client) {
+    public FormStartClient(ClientNavigator navigator, GameClient client) {
         initComponents();
         this.navigator = navigator;
         this.client = client;
@@ -107,8 +107,7 @@ public class StartClientForm extends javax.swing.JPanel {
         client.SetAdress(address);
         client.SetPort(serverPort);
         client.Authorize(nickName);
-        ClientDto clientInfo = new ClientDto();
-        navigator.navigateToMainMenu(clientInfo);
+        navigator.navigateToMainMenu();
     }//GEN-LAST:event_btnConnectActionPerformed
 
 

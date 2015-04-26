@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.nnsu.pacman.common.GameEvent;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.PlayerMessage;
 
@@ -58,11 +59,10 @@ public class GameClient {
             ObjectOutputStream out = GetObjectOutputStream();  
             out.writeObject(message);
             out.flush();
-
         } catch (java.net.ConnectException x) {
             System.out.println("Connect refused");
         } catch (IOException ex) {
-            Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -74,7 +74,26 @@ public class GameClient {
         } catch (java.net.ConnectException x) {
             System.out.println("Connect refused");
         } catch (IOException ex) {
-            Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        throw new IOException("Server Unavailable");
+    }
+    
+    private ServerMessage GetMessage() throws IOException {
+        try {
+            ObjectInputStream in = GetObjectInputStream();  
+            if (in.available() > 0) {
+                ServerMessage message = (ServerMessage)in.readObject();
+                return message;
+            }
+            return null;
+            
+        } catch (java.net.ConnectException x) {
+            System.out.println("Connect refused");
+        } catch (IOException ex) {
+            Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,18 +120,31 @@ public class GameClient {
         this.serverPort = serverPort;
     }
 
-    void CreateGame(Map map) {
+    DtoStartGame CreateGame(Map map) {
         PlayerMessage message = new PlayerMessage();
         message.setActionCreateGame();
         message.setMap(map);
         SendMessage(message);
+        return new DtoStartGame(map, this);
     }
     
-    StartGameDto JoinGame() throws IOException {
+    DtoStartGame JoinGame() throws IOException {
         PlayerMessage message = new PlayerMessage();
         message.setActionJoinGame();
         SendMessage(message);
         ServerMessage answer = ReadMessage();
-        return new StartGameDto(answer.getMap());
+        return new DtoStartGame(answer.getMap(), this);
     }
+
+    void SendEvent(GameEvent gameEvent) {
+        PlayerMessage message = new PlayerMessage();
+        message.setGameEvent(gameEvent);
+        SendMessage(message);
+    }
+
+    GameEvent GetNextEvent() throws IOException {
+        ServerMessage answer = ReadMessage();
+        return answer.getGameEvent();
+    }
+
 }

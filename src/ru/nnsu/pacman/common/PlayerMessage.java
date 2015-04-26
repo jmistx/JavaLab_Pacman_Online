@@ -6,6 +6,7 @@ public class PlayerMessage implements Serializable {
     private String nickName;
     private String action;
     private Map map;
+    private GameEvent gameEvent;
 
     public String getNickName() {
         return nickName;
@@ -33,6 +34,15 @@ public class PlayerMessage implements Serializable {
 
     public void setActionJoinGame() {
         this.action = "Join_Game";
+    }
+
+    public void setGameEvent(GameEvent gameEvent) {
+        this.action = "Game_Event";
+        this.gameEvent = gameEvent;
+    }
+    
+    public GameEvent getGameEvent() {
+        return gameEvent;
     }
 
 }

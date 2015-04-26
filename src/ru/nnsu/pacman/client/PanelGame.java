@@ -7,11 +7,11 @@ import java.awt.event.KeyListener;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
-public class GamePanel extends javax.swing.JPanel {
+public class PanelGame extends javax.swing.JPanel {
     private GameState gameState;
-    private GamePanel selfGamePanel;
+    private PanelGame selfGamePanel;
 
-    public GamePanel(GameState gameState) {
+    public PanelGame(GameState gameState) {
         this.gameState = gameState;
         initComponents();
         this.setFocusable(true);

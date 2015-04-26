@@ -1,8 +1,10 @@
 package ru.nnsu.pacman.server;
 
+import java.util.Observable;
+import ru.nnsu.pacman.common.GameEvent;
 import ru.nnsu.pacman.common.Map;
 
-class Game {
+class Game extends Observable {
     private final Map map;
     private int countFreeSlots = 1;
 
@@ -21,7 +23,9 @@ class Game {
     void join() {
         countFreeSlots--;
     }
-    
-    
 
+    void dispatchEvent(GameEvent gameEvent) {
+        setChanged();
+        notifyObservers(gameEvent);
+    }
 }

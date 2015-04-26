@@ -6,12 +6,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
 
-public class CreateGameForm extends javax.swing.JPanel {
+public class FormCreateGame extends javax.swing.JPanel {
     private final ClientNavigator navigator;
     private final GameClient gameClient;
-    private final CreateGameViewModel viewModel;
+    private final ViewModelCreateGame viewModel;
 
-    CreateGameForm(ClientNavigator navigator, GameClient gameClient, CreateGameViewModel viewModel) {
+    FormCreateGame(ClientNavigator navigator, GameClient gameClient, ViewModelCreateGame viewModel) {
         initComponents();
         this.navigator = navigator;
         this.gameClient = gameClient;
@@ -82,13 +82,13 @@ public class CreateGameForm extends javax.swing.JPanel {
 
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         Map selectedMap = viewModel.getSelectedMap();
-        gameClient.CreateGame(selectedMap);
-        navigator.navigateToGame(new StartGameDto(selectedMap));
+        DtoStartGame dto = gameClient.CreateGame(selectedMap);
+        navigator.navigateToGame(dto);
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
     private void JoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinGameActionPerformed
         try {
-            StartGameDto startGameDto = gameClient.JoinGame();
+            DtoStartGame startGameDto = gameClient.JoinGame();
             navigator.navigateToGame(startGameDto);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");

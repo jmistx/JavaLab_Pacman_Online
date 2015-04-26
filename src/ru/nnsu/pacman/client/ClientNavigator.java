@@ -9,17 +9,17 @@ public class ClientNavigator {
     private static final String gameWindowCard = "gameWindow";
     
     private final CardLayout cards;
-    private final StartClientForm clientStartForm;
-    private final CreateGameForm createGameForm;
-    private final GameForm gameForm;
+    private final FormStartClient clientStartForm;
+    private final FormCreateGame createGameForm;
+    private final FormGame gameForm;
     private final JPanel cardHolder;
 
     public ClientNavigator(CardLayout cards, JPanel cardHolder, GameClient gameClient) {
         this.cards = cards;
         this.cardHolder = cardHolder;
-        clientStartForm = new StartClientForm(this, gameClient);
-        createGameForm = new CreateGameForm(this, gameClient, new CreateGameViewModel());
-        gameForm = new GameForm();
+        clientStartForm = new FormStartClient(this, gameClient);
+        createGameForm = new FormCreateGame(this, gameClient, new ViewModelCreateGame());
+        gameForm = new FormGame(this);
         cardHolder.add(clientStartForm, startWindowCard);
         cardHolder.add(createGameForm, playersWindowCard);
         cardHolder.add(gameForm, gameWindowCard);
@@ -29,11 +29,11 @@ public class ClientNavigator {
         cards.show(cardHolder, startWindowCard);
     }
 
-    public void navigateToMainMenu(ClientDto dto) {
+    public void navigateToMainMenu() {
         cards.show(cardHolder, playersWindowCard);
     }
     
-    public void navigateToGame(StartGameDto dto) {
+    public void navigateToGame(DtoStartGame dto) {
         cards.show(cardHolder, gameWindowCard);
         gameForm.navigate(dto);
     }

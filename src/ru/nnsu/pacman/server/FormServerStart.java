@@ -8,17 +8,11 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author JM
- */
-public class ServerStartForm extends javax.swing.JPanel {
+
+public class FormServerStart extends javax.swing.JPanel {
     private final PacmanServer.Navigator navigator;
 
-    /**
-     * Creates new form ServerStartForm
-     */
-    public ServerStartForm(PacmanServer.Navigator navigator) {
+    public FormServerStart(PacmanServer.Navigator navigator) {
         initComponents();
         this.navigator = navigator;
     }
@@ -76,7 +70,7 @@ public class ServerStartForm extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         int port = Integer.parseInt(portTextBox.getText());
-        AdminDto dto = new AdminDto();
+        DtoAdmin dto = new DtoAdmin();
         dto.setPort(port);
         navigator.navigateToAdmin(dto);
     }//GEN-LAST:event_startButtonActionPerformed
