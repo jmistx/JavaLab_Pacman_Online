@@ -78,11 +78,12 @@ public class GameForm extends javax.swing.JPanel {
 
     void navigate(StartGameDto dto) {
         this.GamePanelContainer.removeAll();
-        GamePanel gamePanel = new GamePanel();
+        GameState gameState = new GameState(dto.getMap());
+        GamePanel gamePanel = new GamePanel(gameState);
         this.GamePanelContainer.add(gamePanel);
         gamePanel.setBounds(0, 0, 500, 500);
         gamePanel.setPreferredSize(new Dimension(500, 500));
         gamePanel.setVisible(true);
-        gamePanel.navigate(dto);
+        gamePanel.Init();
     }
 }

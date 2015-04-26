@@ -8,14 +8,16 @@ import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
 public class GamePanel extends javax.swing.JPanel {
-    private Map map;
-    private int selfPacmanX;
-    private int selfPacmanY;
-    private int score;
-    private final GamePanel selfGamePanel;
+    private GameState gameState;
+    private GamePanel selfGamePanel;
 
-    public GamePanel() {
+    public GamePanel(GameState gameState) {
+        this.gameState = gameState;
         initComponents();
+        this.setFocusable(true);
+    }
+    
+    public void AddKeyboardListener() {
         selfGamePanel = this;
         
         this.addKeyListener(new KeyListener() {
@@ -29,45 +31,22 @@ public class GamePanel extends javax.swing.JPanel {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
-                int newSelfPacmanX = selfPacmanX;
-                int newSelfPacmanY = selfPacmanY;
+            public void keyReleased(KeyEvent e) {                
                 if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
-                    newSelfPacmanX = selfPacmanX - 1;
-                    if (newSelfPacmanX == -1) {
-                        newSelfPacmanX = map.getWidth() - 1;
-                    }
+                    gameState.MoveCharacter(GameState.MOVE_LEFT);
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_UP ){
-                    newSelfPacmanY = selfPacmanY - 1;
-                    if (newSelfPacmanY == -1) {
-                        newSelfPacmanY = map.getHeight() - 1;
-                    }
+                    gameState.MoveCharacter(GameState.MOVE_UP);
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
-                    newSelfPacmanX = selfPacmanX + 1;
-                    if (newSelfPacmanX == map.getWidth()) {
-                        newSelfPacmanX = 0;
-                    }
+                    gameState.MoveCharacter(GameState.MOVE_RIGHT);
                 }
                 if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
-                    newSelfPacmanY = selfPacmanY + 1;
-                    if (newSelfPacmanY == map.getHeight()) {
-                        newSelfPacmanY = 0;
-                    }
-                }
-                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) != MapCell.WALL) {
-                    selfPacmanX = newSelfPacmanX;
-                    selfPacmanY = newSelfPacmanY;
-                }
-                if (map.getCellValue(selfPacmanX, selfPacmanY) == MapCell.PILL) {
-                    map.SetCellValue(selfPacmanX, selfPacmanY, MapCell.EMPTY);
-                    score += 1;
+                    gameState.MoveCharacter(GameState.MOVE_DOWN);
                 }
                 selfGamePanel.repaint();
             }
         });
-        this.setFocusable(true);
     }
 
     @Override
@@ -75,7 +54,7 @@ public class GamePanel extends javax.swing.JPanel {
         super.paintComponent(g);
 
         drawMap(g);
-        drawPacman(g, selfPacmanX, selfPacmanY);
+        drawPacman(g, gameState.selfPacmanX, gameState.selfPacmanY);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,13 +75,11 @@ public class GamePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 415, Short.MAX_VALUE)
         );
-    }// </editor-fold>                        
-
-
-    // Variables declaration - do not modify                     
-    // End of variables declaration                   
+    }// </editor-fold>                                    
 
     void drawCircleInCell(Graphics g, Color color, int cellX, int cellY, float diam) {
+        Map map = gameState.getMap();
+        
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
         
@@ -119,6 +96,8 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     private void drawMap(Graphics g) {
+        Map map = gameState.getMap();
+        
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
        
@@ -151,6 +130,8 @@ public class GamePanel extends javax.swing.JPanel {
     }
     
     void drawPacman(Graphics g, int charX, int charY) {
+        Map map = gameState.getMap();
+        
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
                       
@@ -165,9 +146,9 @@ public class GamePanel extends javax.swing.JPanel {
         g.setColor(Color.black);
         g.drawOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
     }
-
-    void navigate(StartGameDto dto) {
-        this.map = dto.getMap();
+    
+    public void Init() {
+        AddKeyboardListener();
         this.repaint();
         this.requestFocusInWindow();
     }
