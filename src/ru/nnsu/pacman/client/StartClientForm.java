@@ -108,7 +108,7 @@ public class StartClientForm extends javax.swing.JPanel {
         client.SetPort(serverPort);
         client.Authorize(nickName);
         ClientDto clientInfo = new ClientDto();
-        navigator.navigateToAdmin(clientInfo);
+        navigator.navigateToMainMenu(clientInfo);
     }//GEN-LAST:event_btnConnectActionPerformed
 
 

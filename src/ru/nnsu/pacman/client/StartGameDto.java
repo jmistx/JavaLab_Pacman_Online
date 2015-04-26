@@ -5,7 +5,7 @@ import ru.nnsu.pacman.common.Map;
 class StartGameDto {
     private final Map selectedMap;
 
-    StartGameDto(Map selectedMap) {
+    public StartGameDto(Map selectedMap) {
         this.selectedMap = selectedMap;
     }
     

@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import ru.nnsu.pacman.common.Map;
+import ru.nnsu.pacman.common.ServerMessage;
 
 class ConnectionProcesser implements Runnable {
 
@@ -26,12 +28,19 @@ class ConnectionProcesser implements Runnable {
         System.out.println("Sombody connected");
         try {
             ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
+            
             PlayerMessage message = (PlayerMessage) socketIn.readObject();
             viewModel.AddUser(message.getNickName());
             
             PlayerMessage message2 = (PlayerMessage) socketIn.readObject();
             if (message2.getAction().equals("Create_Game")) {
                 viewModel.AddGame(message2.getMap());
+            }
+            if (message2.getAction().equals("Join_Game")) {
+                ServerMessage answer = new ServerMessage();
+                answer.setMap(new Map(5,5, "Map"));
+                socketOut.writeObject(answer);
             }
         } catch (IOException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);

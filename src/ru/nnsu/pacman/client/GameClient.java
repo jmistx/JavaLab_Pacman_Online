@@ -1,6 +1,9 @@
 package ru.nnsu.pacman.client;
 
+import ru.nnsu.pacman.common.ServerMessage;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
@@ -15,6 +18,7 @@ public class GameClient {
     private int serverPort;
     private Socket socket;
     private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
 
     GameClient() {
     }
@@ -37,6 +41,16 @@ public class GameClient {
         outputStream = new ObjectOutputStream(sout); 
         return outputStream;
     }
+    
+    ObjectInputStream GetObjectInputStream() throws IOException {
+        if (inputStream != null ){
+            return inputStream;
+        }
+        
+        InputStream sout = GetSocket().getInputStream();
+        inputStream = new ObjectInputStream(sout); 
+        return inputStream;
+    }
 
     void SendMessage(PlayerMessage message) {
         try {
@@ -49,6 +63,21 @@ public class GameClient {
         } catch (IOException ex) {
             Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    ServerMessage ReadMessage() throws IOException {
+        try {
+            ObjectInputStream in = GetObjectInputStream();  
+            ServerMessage message = (ServerMessage)in.readObject();
+            return message;
+        } catch (java.net.ConnectException x) {
+            System.out.println("Connect refused");
+        } catch (IOException ex) {
+            Logger.getLogger(StartClientForm.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        throw new IOException("Server Unavailable");
     }
 
     void Authorize(String nickName) {
@@ -77,5 +106,12 @@ public class GameClient {
         message.setMap(map);
         SendMessage(message);
     }
-
+    
+    StartGameDto JoinGame() throws IOException {
+        PlayerMessage message = new PlayerMessage();
+        message.setActionJoinGame();
+        SendMessage(message);
+        ServerMessage answer = ReadMessage();
+        return new StartGameDto(answer.getMap());
+    }
 }

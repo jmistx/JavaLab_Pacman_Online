@@ -31,4 +31,8 @@ public class PlayerMessage implements Serializable {
         return this.map;
     }
 
+    public void setActionJoinGame() {
+        this.action = "Join_Game";
+    }
+
 }

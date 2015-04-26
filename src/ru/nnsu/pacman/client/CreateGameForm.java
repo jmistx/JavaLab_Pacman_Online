@@ -1,5 +1,10 @@
 package ru.nnsu.pacman.client;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 public class CreateGameForm extends javax.swing.JPanel {
     private final ClientNavigator navigator;
     private final GameClient gameClient;
@@ -26,6 +31,7 @@ public class CreateGameForm extends javax.swing.JPanel {
         CreateGameButton = new javax.swing.JButton();
         MapComboBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
+        JoinGame = new javax.swing.JButton();
 
         CreateGameButton.setText("Создать игру");
         CreateGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -38,6 +44,13 @@ public class CreateGameForm extends javax.swing.JPanel {
 
         jLabel1.setText("Выберите карту");
 
+        JoinGame.setText("Подключиться к игре");
+        JoinGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JoinGameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -45,10 +58,11 @@ public class CreateGameForm extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CreateGameButton)
                     .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(89, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(CreateGameButton)
+                    .addComponent(JoinGame, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,7 +73,9 @@ public class CreateGameForm extends javax.swing.JPanel {
                 .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(CreateGameButton)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(JoinGame)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -69,9 +85,20 @@ public class CreateGameForm extends javax.swing.JPanel {
         navigator.navigateToGame(new StartGameDto(viewModel.getSelectedMap()));
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
+    private void JoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinGameActionPerformed
+        try {
+            StartGameDto startGameDto = gameClient.JoinGame();
+            navigator.navigateToGame(startGameDto);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
+            navigator.navigateToStart();
+        }
+    }//GEN-LAST:event_JoinGameActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreateGameButton;
+    private javax.swing.JButton JoinGame;
     private javax.swing.JComboBox MapComboBox;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

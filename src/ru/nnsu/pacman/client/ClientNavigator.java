@@ -29,7 +29,7 @@ public class ClientNavigator {
         cards.show(cardHolder, startWindowCard);
     }
 
-    public void navigateToAdmin(ClientDto dto) {
+    public void navigateToMainMenu(ClientDto dto) {
         cards.show(cardHolder, playersWindowCard);
     }
     
