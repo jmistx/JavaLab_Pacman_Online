@@ -2,13 +2,47 @@ package ru.nnsu.pacman.client;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import ru.nnsu.pacman.common.Map;
 
 public class GameForm extends javax.swing.JPanel {
     private Map map;
+    private int selfPacmanX;
+    private int selfPacmanY;
 
     public GameForm() {
         initComponents();
+        
+        this.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
+                    selfPacmanX-=1;
+                }
+                if ( e.getKeyCode() == KeyEvent.VK_UP ){
+                    selfPacmanY-=1;
+                }
+                if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
+                    selfPacmanX+=1;
+                }
+                if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
+                    selfPacmanY+=1;
+                }
+                GameForm source = (GameForm)e.getSource();
+                source.repaint();
+            }
+        });
+        this.setFocusable(true);
     }
 
     @Override
@@ -16,7 +50,7 @@ public class GameForm extends javax.swing.JPanel {
         super.paintComponent(g);
 
         drawMap(g);
-        drawPacman(g);
+        drawPacman(g, selfPacmanX, selfPacmanY);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,11 +104,9 @@ public class GameForm extends javax.swing.JPanel {
         } 
     }
     
-    void drawPacman(Graphics g) {
+    void drawPacman(Graphics g, int charX, int charY) {
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
-        int charX = 4;
-        int charY = 4;
                       
         int pacmanWidth = (int) (cellWidth/1.5);
         int pacmanHeight = (int) (cellHeight/1.5);
@@ -91,5 +123,6 @@ public class GameForm extends javax.swing.JPanel {
 
     void navigate(StartGameDto dto) {
         this.map = dto.getMap();
+        this.requestFocusInWindow();
     }
 }
