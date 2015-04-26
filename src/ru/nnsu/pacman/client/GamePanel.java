@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import ru.nnsu.pacman.common.Map;
+import ru.nnsu.pacman.common.MapCell;
 
 public class GamePanel extends javax.swing.JPanel {
     private Map map;
@@ -15,6 +16,7 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel() {
         initComponents();
         selfGamePanel = this;
+        
         this.addKeyListener(new KeyListener() {
             
             @Override
@@ -53,7 +55,7 @@ public class GamePanel extends javax.swing.JPanel {
                         newSelfPacmanY = 0;
                     }
                 }
-                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) == 0) {
+                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) != 1) {
                     selfPacmanX = newSelfPacmanX;
                     selfPacmanY = newSelfPacmanY;
                 }
@@ -95,9 +97,23 @@ public class GamePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify                     
     // End of variables declaration                   
 
-    private void drawMap(Graphics g) {
-        if (this.map == null) return;
+    void drawCircleInCell(Graphics g, Color color, int cellX, int cellY, float diam) {
+        Integer cellWidth = this.getWidth() / map.getWidth();
+        Integer cellHeight = this.getHeight() / map.getHeight();
         
+        int circleWidth = (int) (cellWidth * diam);
+        int circleHeight = (int) (cellHeight * diam);
+        
+        int pacmanX = cellWidth * cellX + (cellWidth - circleWidth)/2;
+        int pacmanY = cellHeight * cellY + (cellHeight - circleHeight)/2;
+        
+        g.setColor(color);
+        g.fillOval(pacmanX, pacmanY, circleWidth, circleHeight);
+        g.setColor(Color.black);
+        g.drawOval(pacmanX, pacmanY, circleWidth, circleHeight);
+    }
+
+    private void drawMap(Graphics g) {
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
        
@@ -106,8 +122,8 @@ public class GamePanel extends javax.swing.JPanel {
           
             for (Integer y = 0; y < map.getHeight(); y++){
                 
-                Integer value = map.getCellValue(x, y);
-                if( value == 1){
+                Integer cell = map.getCellValue(x, y);
+                if( cell == MapCell.WALL){
                     g.setColor(Color.blue);
                 }
                 else {
@@ -116,10 +132,17 @@ public class GamePanel extends javax.swing.JPanel {
                 g.fillRect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
                 g.setColor(Color.black);
                 g.drawLine(0, y*cellHeight, cellWidth*this.getWidth(), y*cellHeight);
+                
+                if (cell == MapCell.PILL) {
+                    
+                    g.setColor(Color.BLACK);
+                    drawCircleInCell(g, Color.BLACK, x, y, (float) 0.2);
+                    
+                }
             }
             g.setColor(Color.black);
             g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
-        } 
+        }  
     }
     
     void drawPacman(Graphics g, int charX, int charY) {
@@ -136,7 +159,6 @@ public class GamePanel extends javax.swing.JPanel {
         g.fillOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
         g.setColor(Color.black);
         g.drawOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
-        
     }
 
     void navigate(StartGameDto dto) {

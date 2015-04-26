@@ -19,7 +19,7 @@ public class Map implements Serializable {
     public final String getName(){
         return name;
     }
-    
+   
     public final void setName(String newName){
         this.name = newName;
     }
@@ -32,13 +32,13 @@ public class Map implements Serializable {
     }
 
     public void SetCellAsWall(int x, int y) {
-        mapGrid[x][y] = 1;
+        mapGrid[x][y] = MapCell.WALL;
     }
     public int getCellValue(int x,int y){
         return mapGrid[x][y];
     }
 
     public void DeleteWall(int x, int y) {
-        mapGrid[x][y] = 0;
+        mapGrid[x][y] = MapCell.PILL;
     }
 }
