@@ -18,11 +18,6 @@ public class CanvasBoard extends JPanel {
         drawMap(g);
     }
 
-    private void paintSomething(Graphics g) {
-        g.fillOval(10, 10, 10, 10);
-        g.drawOval(10, 10, 10, 10);
-    }
-
     public CanvasBoard(final Map map) {
         this.map = map;
         
@@ -34,7 +29,7 @@ public class CanvasBoard extends JPanel {
                 CanvasBoard that = (CanvasBoard) e.getSource();
                 Integer cellWidth = that.getWidth() / map.getWidth();
                 Integer cellHeight = that.getHeight() / map.getHeight();
-                map.SetCellAsWall(e.getX()/cellWidth, e.getY()/cellHeight); 
+                map.SetCellValue(e.getX()/cellWidth, e.getY()/cellHeight, MapCell.WALL); 
                 that.repaint();
                 }
                 else
@@ -42,7 +37,7 @@ public class CanvasBoard extends JPanel {
                 CanvasBoard that = (CanvasBoard) e.getSource();
                 Integer cellWidth = that.getWidth() / map.getWidth();
                 Integer cellHeight = that.getHeight() / map.getHeight();
-                map.DeleteWall(e.getX()/cellWidth, e.getY()/cellHeight); 
+                map.SetCellValue(e.getX()/cellWidth, e.getY()/cellHeight, MapCell.PILL); 
                 that.repaint();
                 }
             }

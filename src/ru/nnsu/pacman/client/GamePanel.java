@@ -11,6 +11,7 @@ public class GamePanel extends javax.swing.JPanel {
     private Map map;
     private int selfPacmanX;
     private int selfPacmanY;
+    private int score;
     private final GamePanel selfGamePanel;
 
     public GamePanel() {
@@ -55,9 +56,12 @@ public class GamePanel extends javax.swing.JPanel {
                         newSelfPacmanY = 0;
                     }
                 }
-                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) != 1) {
+                if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) != MapCell.WALL) {
                     selfPacmanX = newSelfPacmanX;
                     selfPacmanY = newSelfPacmanY;
+                }
+                if (map.getCellValue(selfPacmanX, selfPacmanY) == MapCell.PILL) {
+                    score += 1;
                 }
                 selfGamePanel.repaint();
             }

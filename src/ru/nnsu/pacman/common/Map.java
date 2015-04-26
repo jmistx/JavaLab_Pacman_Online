@@ -30,15 +30,12 @@ public class Map implements Serializable {
     public final int getHeight(){
         return height;
     }
-
-    public void SetCellAsWall(int x, int y) {
-        mapGrid[x][y] = MapCell.WALL;
+    
+    public void SetCellValue(int x, int y, int cell) {
+        mapGrid[x][y] = cell;
     }
+
     public int getCellValue(int x,int y){
         return mapGrid[x][y];
-    }
-
-    public void DeleteWall(int x, int y) {
-        mapGrid[x][y] = MapCell.PILL;
     }
 }
