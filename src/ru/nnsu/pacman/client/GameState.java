@@ -1,10 +1,8 @@
 package ru.nnsu.pacman.client;
 
 import ru.nnsu.pacman.common.GameEvent;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Observable;
-import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
