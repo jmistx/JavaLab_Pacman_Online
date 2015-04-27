@@ -3,6 +3,7 @@ package ru.nnsu.pacman.client;
 class Player {
     private int x;
     private int y;
+    private int score;
 
     public Player() {
     }
@@ -21,6 +22,14 @@ class Player {
 
     void setY(int y) {
         this.y = y;
+    }
+
+    int getScore() {
+        return this.score;
+    }
+
+    void addScore() {
+        this.score += 1;
     }
 
 }

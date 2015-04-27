@@ -16,7 +16,6 @@ class GameState extends Observable {
     public final static int MOVE_DOWN = 4;
 
     private final Map map;
-    public int score;
     private final GameClient gameClient;
     private final int playerNumber;
     
@@ -30,8 +29,18 @@ class GameState extends Observable {
         player1 = new Player();
         player2 = new Player();
     }
+    
     public void MoveCharacter(int direction) throws IOException {
-        Player player = playerNumber == 0? player1 : player2;
+        Player player = null;
+        if (playerNumber == 0) {
+            player = player1;
+        }
+        else if (playerNumber == 1) {
+            player = player2;
+        }
+        else {
+            return;
+        }
         
         int newX = player.getX();
         int newY = player.getY();
@@ -67,7 +76,7 @@ class GameState extends Observable {
         }
         if (map.getCellValue(player.getX(), player.getY()) == MapCell.PILL) {
             map.SetCellValue(player.getX(), player.getY(), MapCell.EMPTY);
-            score += 1;
+            player.addScore();
         }
         
         GameEvent gameEvent = new GameEvent();
@@ -90,7 +99,22 @@ class GameState extends Observable {
         player.setX(event.getX());
         player.setY(event.getY());
         
+        if (this.map.getCellValue(player.getX(), player.getY()) == MapCell.PILL) {
+            this.map.SetCellValue(player.getX(), player.getY(),  MapCell.EMPTY);
+            player.addScore();
+        }
+        
         setChanged();
         notifyObservers();
+    }
+
+    int getMyScore() {
+        Player player = playerNumber == 0? player1 : player2;
+        return player.getScore();
+    }
+    
+    int getEnemyScore() {
+        Player player = playerNumber == 1? player1 : player2;
+        return player.getScore();
     }
 }
