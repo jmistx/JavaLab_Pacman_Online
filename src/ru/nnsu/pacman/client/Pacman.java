@@ -24,7 +24,7 @@ public class Pacman extends JFrame  {
         add(cardHolder);
         pack();
 
-        setSize(350, 200);
+        setSize(600, 650);
 
         setTitle("PacmanGame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
