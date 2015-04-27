@@ -54,16 +54,10 @@ public class GameClient {
         return inputStream;
     }
 
-    void SendMessage(PlayerMessage message) {
-        try {
+    void SendMessage(PlayerMessage message) throws IOException {
             ObjectOutputStream out = GetObjectOutputStream();  
             out.writeObject(message);
             out.flush();
-        } catch (java.net.ConnectException x) {
-            System.out.println("Connect refused");
-        } catch (IOException ex) {
-            Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     ServerMessage ReadMessage() throws IOException {
@@ -100,15 +94,9 @@ public class GameClient {
         throw new IOException("Server Unavailable");
     }
 
-    void Authorize(String nickName) {
+    void Authorize(String nickName) throws IOException{
         PlayerMessage message = new PlayerMessage();
         message.setNickName(nickName);
-        SendMessage(message);
-    }
-
-    void CreateGame() {
-        PlayerMessage message = new PlayerMessage();
-        message.setActionCreateGame();
         SendMessage(message);
     }
 
@@ -120,7 +108,7 @@ public class GameClient {
         this.serverPort = serverPort;
     }
 
-    DtoStartGame CreateGame(Map map) {
+    DtoStartGame CreateGame(Map map) throws IOException{
         PlayerMessage message = new PlayerMessage();
         message.setActionCreateGame();
         message.setMap(map);
@@ -136,7 +124,7 @@ public class GameClient {
         return new DtoStartGame(answer.getMap(), 1, this);
     }
 
-    void SendEvent(GameEvent gameEvent) {
+    void SendEvent(GameEvent gameEvent) throws IOException{
         PlayerMessage message = new PlayerMessage();
         message.setGameEvent(gameEvent);
         SendMessage(message);

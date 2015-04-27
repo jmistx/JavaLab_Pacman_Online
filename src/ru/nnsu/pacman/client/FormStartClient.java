@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ru.nnsu.pacman.client.ClientNavigator;
 import ru.nnsu.pacman.common.PlayerMessage;
 import ru.nnsu.pacman.server.PacmanServer;
@@ -106,8 +107,14 @@ public class FormStartClient extends javax.swing.JPanel {
         String nickName = nickNameTextBox.getText();
         client.SetAdress(address);
         client.SetPort(serverPort);
-        client.Authorize(nickName);
-        navigator.navigateToMainMenu();
+         try {
+             client.Authorize(nickName);
+             navigator.navigateToMainMenu();
+         } catch (IOException ex) {
+             JOptionPane.showMessageDialog(null, "Сервер недоступен.");
+             Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        
     }//GEN-LAST:event_btnConnectActionPerformed
 
 

@@ -2,6 +2,7 @@ package ru.nnsu.pacman.client;
 
 import ru.nnsu.pacman.common.GameEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
@@ -29,7 +30,7 @@ class GameState extends Observable {
         player1 = new Player();
         player2 = new Player();
     }
-    public void MoveCharacter(int direction) {
+    public void MoveCharacter(int direction) throws IOException {
         Player player = playerNumber == 0? player1 : player2;
         
         int newX = player.getX();

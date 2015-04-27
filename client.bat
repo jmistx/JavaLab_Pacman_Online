@@ -1,1 +1,1 @@
-"C:\Program Files (x86)\Java\jdk1.7.0_71\bin\java.exe" -cp dist\Pacman.jar ru.nnsu.pacman.client.Pacman
+"C:\Program Files (x86)\Java\jdk1.7.0_75\bin\java.exe" -cp dist\Pacman.jar ru.nnsu.pacman.client.Pacman

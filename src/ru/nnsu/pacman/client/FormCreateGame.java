@@ -82,8 +82,15 @@ public class FormCreateGame extends javax.swing.JPanel {
 
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         Map selectedMap = viewModel.getSelectedMap();
-        DtoStartGame dto = gameClient.CreateGame(selectedMap);
-        navigator.navigateToGame(dto);
+        DtoStartGame dto;
+        try {
+            dto = gameClient.CreateGame(selectedMap);
+            navigator.navigateToGame(dto);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
+            navigator.navigateToStart();
+            Logger.getLogger(FormCreateGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
     private void JoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinGameActionPerformed

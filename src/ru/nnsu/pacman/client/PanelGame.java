@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
@@ -11,11 +13,13 @@ public class PanelGame extends javax.swing.JPanel {
 
     private GameState gameState;
     private PanelGame selfGamePanel;
+    private final ClientNavigator navigator;
 
-    public PanelGame(GameState gameState) {
+    public PanelGame(GameState gameState, ClientNavigator navigator) {
         this.gameState = gameState;
         initComponents();
         this.setFocusable(true);
+        this.navigator = navigator;
     }
 
     public void AddKeyboardListener() {
@@ -33,17 +37,22 @@ public class PanelGame extends javax.swing.JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    gameState.MoveCharacter(GameState.MOVE_LEFT);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    gameState.MoveCharacter(GameState.MOVE_UP);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    gameState.MoveCharacter(GameState.MOVE_RIGHT);
-                }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    gameState.MoveCharacter(GameState.MOVE_DOWN);
+                try {
+                    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                        gameState.MoveCharacter(GameState.MOVE_LEFT);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_UP) {
+                        gameState.MoveCharacter(GameState.MOVE_UP);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                        gameState.MoveCharacter(GameState.MOVE_RIGHT);
+                    }
+                    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                        gameState.MoveCharacter(GameState.MOVE_DOWN);
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
+                    navigator.navigateToStart();
                 }
                 selfGamePanel.repaint();
             }

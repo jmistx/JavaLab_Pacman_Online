@@ -117,7 +117,7 @@ public class FormGame extends javax.swing.JPanel {
         
         final GameClient gameClient = dto.getGameClient();
         final GameState gameState = new GameState(dto.getMap(), dto.getPlayerNumber(), gameClient);
-        PanelGame gamePanel = new PanelGame(gameState);
+        PanelGame gamePanel = new PanelGame(gameState, navigator);
         
         this.GamePanelContainer.removeAll();
         this.GamePanelContainer.add(gamePanel);
