@@ -39,5 +39,18 @@ public class ViewModelAdminServerForm {
         }
         return null;
     }
+
+    void removeUser(String userNickName) {
+        userListModel.removeElement(userNickName);
+    }
+
+    void removeGame(Game game) {
+        for (int i = 0; i < gameTableModel.getRowCount(); i++) {
+            String mapName = (String)gameTableModel.getValueAt(i, 0);
+            if (game.getMap().getName().equals(mapName)) {
+                gameTableModel.removeRow(i);
+            }
+        }
+    }
     
 }

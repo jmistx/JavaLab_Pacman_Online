@@ -21,6 +21,8 @@ class ConnectionProcesser implements Runnable {
 
     private final Socket socket;
     private final ViewModelAdminServerForm viewModel;
+    private String userNickName;
+    private Game game;
 
     ConnectionProcesser(Socket socket, ViewModelAdminServerForm viewModel) {
         this.socket = socket;
@@ -30,7 +32,6 @@ class ConnectionProcesser implements Runnable {
     @Override
     public void run() {
         System.out.println("Sombody connected");
-        Game game = null;
         int playerNumber = -1;
         
         try {
@@ -38,7 +39,8 @@ class ConnectionProcesser implements Runnable {
             final ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
 
             PlayerMessage message = (PlayerMessage) socketIn.readObject();
-            viewModel.AddUser(message.getNickName());
+            userNickName = message.getNickName();
+            viewModel.AddUser(userNickName);
 
             while (game == null) {
                 PlayerMessage message2 = (PlayerMessage) socketIn.readObject();
@@ -68,9 +70,19 @@ class ConnectionProcesser implements Runnable {
             }
 
         } catch (IOException ex) {
+            viewModel.removeUser(userNickName);
+            if (game != null) {
+                game.disconnect();
+            }
+            
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (game != null) {
+            if (game.isFinished()){
+                viewModel.removeGame(game);
+            }
         }
     }
 
