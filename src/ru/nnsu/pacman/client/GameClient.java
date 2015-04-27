@@ -128,7 +128,11 @@ public class GameClient {
         return answer.getGameEvent();
     }
 
-    List<GameDescription> GetGames() {
+    List<GameDescription> GetGames() throws IOException {
+        PlayerMessage message = new PlayerMessage();
+        message.setActionGetGames();
+        SendMessage(message);
+        
         ArrayList<GameDescription> list = new ArrayList<>();
         list.add(new GameDescription(12234, "Jimmi", "Lost Temple", 2));
         return list;

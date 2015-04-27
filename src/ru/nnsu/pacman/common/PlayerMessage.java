@@ -11,6 +11,7 @@ public class PlayerMessage implements Serializable {
     private final String joinGame = "Join_Game";
     private final String observeGame = "Observe_Game";
     private final String eventInGame = "Game_Event";
+    private final String getGames = "Get_Games";
     
     
     public String getNickName() {
@@ -65,5 +66,13 @@ public class PlayerMessage implements Serializable {
     
     public GameEvent getGameEvent() {
         return gameEvent;
+    }
+
+    public void setActionGetGames() {
+        this.action = getGames;
+    }
+
+    public boolean isActionGetGames() {
+        return this.action.equals(getGames);
     }
 }

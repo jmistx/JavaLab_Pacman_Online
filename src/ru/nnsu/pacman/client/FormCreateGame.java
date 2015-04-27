@@ -159,12 +159,16 @@ public class FormCreateGame extends javax.swing.JPanel {
     }//GEN-LAST:event_observeGameButtonActionPerformed
 
     private void UpdateGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateGamesActionPerformed
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"Создатель", "Карта", "Игроки"}, 0);
-        List<GameDescription> games = gameClient.GetGames();
-        for (GameDescription game : games) {
-            defaultTableModel.addRow(new Object[]{game.getOwner(), game, game.getPlayerCount()});
+        try {
+            DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"Создатель", "Карта", "Игроки"}, 0);
+            List<GameDescription> games = gameClient.GetGames();
+            for (GameDescription game : games) {
+                defaultTableModel.addRow(new Object[]{game.getOwner(), game, game.getPlayerCount()});
+            }
+            jTable1.setModel(defaultTableModel);
+        } catch (IOException ex) {
+            OnConnectionBroken();
         }
-        jTable1.setModel(defaultTableModel);
     }//GEN-LAST:event_UpdateGamesActionPerformed
 
 

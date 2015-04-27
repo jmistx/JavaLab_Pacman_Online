@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.nnsu.pacman.common.GameDescription;
 import ru.nnsu.pacman.common.GameEvent;
 import ru.nnsu.pacman.common.ServerMessage;
 
@@ -66,6 +67,13 @@ class ConnectionProcesser implements Runnable {
                     } else {
                         answer.setMap(game.getMap());
                     }
+                    socketOut.writeObject(answer);
+                }
+                
+                if (message2.isActionGetGames()){
+                    ServerMessage answer = new ServerMessage();
+                    List<GameDescription> games = viewModel.getAvailableGames();
+                    answer.setGames(games);
                     socketOut.writeObject(answer);
                 }
             }
