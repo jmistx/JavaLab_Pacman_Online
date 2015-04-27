@@ -124,7 +124,4 @@ public class GameClient {
         ServerMessage answer = ReadMessage();
         return answer.getGameEvent();
     }
-
-    
-
 }

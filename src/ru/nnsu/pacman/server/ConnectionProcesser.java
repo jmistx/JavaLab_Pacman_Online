@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -68,8 +69,14 @@ class ConnectionProcesser implements Runnable {
                     socketOut.writeObject(answer);
                 }
             }
+            final GameEventNotifier gameEventNotifier = new GameEventNotifier(playerNumber, socketOut);
 
-            game.addObserver(new GameEventNotifier(playerNumber, socketOut));
+            game.addObserver(gameEventNotifier);
+            List<GameEvent> history = game.getHistory();
+            for (GameEvent event : history) {
+                gameEventNotifier.update(game, event);
+            }
+            
             while (true) {
                 PlayerMessage message3 = (PlayerMessage) socketIn.readObject();
                 if (message3.isGameEvent()) {
