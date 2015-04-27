@@ -18,7 +18,7 @@ class GameState extends Observable {
     private final Map map;
     private final GameClient gameClient;
     private final int playerNumber;
-    
+
     public Player player1;
     public Player player2;
 
@@ -29,19 +29,17 @@ class GameState extends Observable {
         player1 = new Player();
         player2 = new Player();
     }
-    
+
     public void MoveCharacter(int direction) throws IOException {
         Player player = null;
         if (playerNumber == 0) {
             player = player1;
-        }
-        else if (playerNumber == 1) {
+        } else if (playerNumber == 1) {
             player = player2;
-        }
-        else {
+        } else {
             return;
         }
-        
+
         int newX = player.getX();
         int newY = player.getY();
 
@@ -78,43 +76,43 @@ class GameState extends Observable {
             map.SetCellValue(player.getX(), player.getY(), MapCell.EMPTY);
             player.addScore();
         }
-        
+
         GameEvent gameEvent = new GameEvent();
         gameEvent.setPlayerNumber(playerNumber);
         gameEvent.setType(GameEvent.MOVE);
         gameEvent.setPosition(player.getX(), player.getY());
-        
+
         gameClient.SendEvent(gameEvent);
         setChanged();
         notifyObservers();
     }
-    
 
     Map getMap() {
         return map;
     }
 
     void dispatchEvent(GameEvent event) {
-        Player player = event.getPlayerNumber() == 0? player1 : player2;
-        player.setX(event.getX());
-        player.setY(event.getY());
-        
-        if (this.map.getCellValue(player.getX(), player.getY()) == MapCell.PILL) {
-            this.map.SetCellValue(player.getX(), player.getY(),  MapCell.EMPTY);
-            player.addScore();
+        if (event.getType() == GameEvent.MOVE) {
+            Player player = event.getPlayerNumber() == 0 ? player1 : player2;
+            player.setX(event.getX());
+            player.setY(event.getY());
+
+            if (this.map.getCellValue(player.getX(), player.getY()) == MapCell.PILL) {
+                this.map.SetCellValue(player.getX(), player.getY(), MapCell.EMPTY);
+                player.addScore();
+            }
+            setChanged();
         }
-        
-        setChanged();
         notifyObservers();
     }
 
     int getMyScore() {
-        Player player = playerNumber == 0? player1 : player2;
+        Player player = playerNumber == 0 ? player1 : player2;
         return player.getScore();
     }
-    
+
     int getEnemyScore() {
-        Player player = playerNumber == 1? player1 : player2;
+        Player player = playerNumber == 1 ? player1 : player2;
         return player.getScore();
     }
 }
