@@ -75,25 +75,6 @@ public class GameClient {
         throw new IOException("Server Unavailable");
     }
     
-    private ServerMessage GetMessage() throws IOException {
-        try {
-            ObjectInputStream in = GetObjectInputStream();  
-            if (in.available() > 0) {
-                ServerMessage message = (ServerMessage)in.readObject();
-                return message;
-            }
-            return null;
-            
-        } catch (java.net.ConnectException x) {
-            System.out.println("Connect refused");
-        } catch (IOException ex) {
-            Logger.getLogger(FormStartClient.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        throw new IOException("Server Unavailable");
-    }
-
     void Authorize(String nickName) throws IOException{
         PlayerMessage message = new PlayerMessage();
         message.setNickName(nickName);
