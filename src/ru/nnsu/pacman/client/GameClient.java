@@ -25,7 +25,7 @@ public class GameClient {
     GameClient() {
     }
 
-    Socket GetSocket() throws IOException {
+    private Socket GetSocket() throws IOException {
         if (socket != null) {
             return socket;
         }
@@ -35,7 +35,7 @@ public class GameClient {
         System.out.println("Connected.");
         return socket;
     }
-    ObjectOutputStream GetObjectOutputStream() throws IOException {
+    private ObjectOutputStream GetObjectOutputStream() throws IOException {
         if (outputStream != null) {
             return outputStream;
         }
@@ -44,7 +44,7 @@ public class GameClient {
         return outputStream;
     }
     
-    ObjectInputStream GetObjectInputStream() throws IOException {
+    private ObjectInputStream GetObjectInputStream() throws IOException {
         if (inputStream != null ){
             return inputStream;
         }
@@ -54,13 +54,13 @@ public class GameClient {
         return inputStream;
     }
 
-    void SendMessage(PlayerMessage message) throws IOException {
+    private void SendMessage(PlayerMessage message) throws IOException {
             ObjectOutputStream out = GetObjectOutputStream();  
             out.writeObject(message);
             out.flush();
     }
     
-    ServerMessage ReadMessage() throws IOException {
+    private ServerMessage ReadMessage() throws IOException {
         try {
             ObjectInputStream in = GetObjectInputStream();  
             ServerMessage message = (ServerMessage)in.readObject();
