@@ -17,26 +17,21 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="observeGameButton" alignment="0" max="32767" attributes="0"/>
                   <Component id="JoinGame" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="462" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="462" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="MapComboBox" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CreateGameButton" min="-2" pref="153" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="MapComboBox" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CreateGameButton" min="-2" pref="153" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="JoinGame1" max="32767" attributes="0"/>
+                  <Component id="UpdateGames" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,7 +45,7 @@
                   <Component id="CreateGameButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="JoinGame1" min="-2" max="-2" attributes="0"/>
+              <Component id="UpdateGames" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="171" max="32767" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -113,10 +108,7 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="2">
-                <Column editable="true" title="&#x41a;&#x430;&#x440;&#x442;&#x430;" type="java.lang.String"/>
-                <Column editable="true" title="&#x418;&#x433;&#x440;&#x430;&#x44e;&#x442;" type="java.lang.Integer"/>
-              </Table>
+              <Table columnCount="0" rowCount="2"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -125,12 +117,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="JoinGame1">
+    <Component class="javax.swing.JButton" name="UpdateGames">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&#x41f;&#x43e;&#x434;&#x43a;&#x43b;&#x44e;&#x447;&#x438;&#x442;&#x44c;&#x441;&#x44f; &#x43a; &#x438;&#x433;&#x440;&#x435;"/>
+        <Property name="text" type="java.lang.String" value="&#x41e;&#x431;&#x43d;&#x43e;&#x432;&#x438;&#x442;&#x44c; &#x441;&#x43f;&#x438;&#x441;&#x43e;&#x43a; &#x438;&#x433;&#x440;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JoinGame1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UpdateGamesActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

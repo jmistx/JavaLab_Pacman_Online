@@ -127,4 +127,8 @@ public class FormStartClient extends javax.swing.JPanel {
     private javax.swing.JTextField portTextBox;
     private javax.swing.JTextField serverTextBox;
     // End of variables declaration//GEN-END:variables
+
+    void navigate() {
+        client.ResetProxy();
+    }
 }

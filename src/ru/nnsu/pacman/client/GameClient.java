@@ -8,8 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.nnsu.pacman.common.GameDescription;
 import ru.nnsu.pacman.common.GameEvent;
 import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.PlayerMessage;
@@ -123,5 +126,22 @@ public class GameClient {
     GameEvent GetNextEvent() throws IOException {
         ServerMessage answer = ReadMessage();
         return answer.getGameEvent();
+    }
+
+    List<GameDescription> GetGames() {
+        ArrayList<GameDescription> list = new ArrayList<>();
+        list.add(new GameDescription(12234, "Jimmi", "Lost Temple", 2));
+        return list;
+    }
+
+    void ResetProxy() {
+        try {
+            this.socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.socket = null;
+        this.outputStream = null;
+        this.inputStream = null;
     }
 }

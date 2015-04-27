@@ -1,12 +1,16 @@
 package ru.nnsu.pacman.client;
 
+import ru.nnsu.pacman.common.GameDescription;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import ru.nnsu.pacman.common.Map;
 
 public class FormCreateGame extends javax.swing.JPanel {
+
     private final ClientNavigator navigator;
     private final GameClient gameClient;
     private final ViewModelCreateGame viewModel;
@@ -36,7 +40,7 @@ public class FormCreateGame extends javax.swing.JPanel {
         observeGameButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        JoinGame1 = new javax.swing.JButton();
+        UpdateGames = new javax.swing.JButton();
 
         CreateGameButton.setText("Создать игру");
         CreateGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -65,27 +69,19 @@ public class FormCreateGame extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null}
+                {},
+                {}
             },
             new String [] {
-                "Карта", "Играют"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
-        JoinGame1.setText("Подключиться к игре");
-        JoinGame1.addActionListener(new java.awt.event.ActionListener() {
+        UpdateGames.setText("Обновить список игр");
+        UpdateGames.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JoinGame1ActionPerformed(evt);
+                UpdateGamesActionPerformed(evt);
             }
         });
 
@@ -98,17 +94,14 @@ public class FormCreateGame extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(observeGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JoinGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(MapComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CreateGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(JoinGame1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MapComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CreateGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UpdateGames, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,7 +113,7 @@ public class FormCreateGame extends javax.swing.JPanel {
                     .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CreateGameButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JoinGame1)
+                .addComponent(UpdateGames)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -133,9 +126,9 @@ public class FormCreateGame extends javax.swing.JPanel {
 
     private void OnConnectionBroken() {
         JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
-            navigator.navigateToStart();
+        navigator.navigateToStart();
     }
-    
+
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         Map selectedMap = viewModel.getSelectedMap();
         DtoStartGame dto;
@@ -165,16 +158,21 @@ public class FormCreateGame extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_observeGameButtonActionPerformed
 
-    private void JoinGame1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JoinGame1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JoinGame1ActionPerformed
+    private void UpdateGamesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateGamesActionPerformed
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new Object[]{"Создатель", "Карта", "Игроки"}, 0);
+        List<GameDescription> games = gameClient.GetGames();
+        for (GameDescription game : games) {
+            defaultTableModel.addRow(new Object[]{game.getOwner(), game, game.getPlayerCount()});
+        }
+        jTable1.setModel(defaultTableModel);
+    }//GEN-LAST:event_UpdateGamesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CreateGameButton;
     private javax.swing.JButton JoinGame;
-    private javax.swing.JButton JoinGame1;
     private javax.swing.JComboBox MapComboBox;
+    private javax.swing.JButton UpdateGames;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

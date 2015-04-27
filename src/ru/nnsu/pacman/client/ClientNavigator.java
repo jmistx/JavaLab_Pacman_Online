@@ -27,6 +27,7 @@ public class ClientNavigator {
 
     public void navigateToStart() {
         cards.show(cardHolder, startWindowCard);
+        clientStartForm.navigate();
     }
 
     public void navigateToMainMenu() {
