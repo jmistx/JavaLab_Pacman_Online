@@ -8,6 +8,7 @@ import ru.nnsu.pacman.common.Map;
 import ru.nnsu.pacman.common.MapCell;
 
 public class PanelGame extends javax.swing.JPanel {
+
     private GameState gameState;
     private PanelGame selfGamePanel;
 
@@ -16,12 +17,12 @@ public class PanelGame extends javax.swing.JPanel {
         initComponents();
         this.setFocusable(true);
     }
-    
+
     public void AddKeyboardListener() {
         selfGamePanel = this;
-        
+
         this.addKeyListener(new KeyListener() {
-            
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -31,17 +32,17 @@ public class PanelGame extends javax.swing.JPanel {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {                
-                if ( e.getKeyCode() == KeyEvent.VK_LEFT ){
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     gameState.MoveCharacter(GameState.MOVE_LEFT);
                 }
-                if ( e.getKeyCode() == KeyEvent.VK_UP ){
+                if (e.getKeyCode() == KeyEvent.VK_UP) {
                     gameState.MoveCharacter(GameState.MOVE_UP);
                 }
-                if ( e.getKeyCode() == KeyEvent.VK_RIGHT ){
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     gameState.MoveCharacter(GameState.MOVE_RIGHT);
                 }
-                if ( e.getKeyCode() == KeyEvent.VK_DOWN ){
+                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                     gameState.MoveCharacter(GameState.MOVE_DOWN);
                 }
                 selfGamePanel.repaint();
@@ -54,8 +55,10 @@ public class PanelGame extends javax.swing.JPanel {
         super.paintComponent(g);
 
         drawMap(g);
-        drawPacman(g, gameState.selfPacmanX, gameState.selfPacmanY);
+        drawPacman(g, Color.yellow, gameState.player1.getX(), gameState.player1.getY());
+        drawPacman(g, Color.green, gameState.player2.getX(), gameState.player2.getY());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,27 +71,27 @@ public class PanelGame extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 415, Short.MAX_VALUE)
         );
     }// </editor-fold>                                    
 
     void drawCircleInCell(Graphics g, Color color, int cellX, int cellY, float diam) {
         Map map = gameState.getMap();
-        
+
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
-        
+
         int circleWidth = (int) (cellWidth * diam);
         int circleHeight = (int) (cellHeight * diam);
-        
-        int pacmanX = cellWidth * cellX + (cellWidth - circleWidth)/2;
-        int pacmanY = cellHeight * cellY + (cellHeight - circleHeight)/2;
-        
+
+        int pacmanX = cellWidth * cellX + (cellWidth - circleWidth) / 2;
+        int pacmanY = cellHeight * cellY + (cellHeight - circleHeight) / 2;
+
         g.setColor(color);
         g.fillOval(pacmanX, pacmanY, circleWidth, circleHeight);
         g.setColor(Color.black);
@@ -97,56 +100,54 @@ public class PanelGame extends javax.swing.JPanel {
 
     private void drawMap(Graphics g) {
         Map map = gameState.getMap();
-        
+
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
-       
-         
-        for (Integer x = 0; x < map.getWidth(); x++){
-          
-            for (Integer y = 0; y < map.getHeight(); y++){
-                
+
+        for (Integer x = 0; x < map.getWidth(); x++) {
+
+            for (Integer y = 0; y < map.getHeight(); y++) {
+
                 Integer cell = map.getCellValue(x, y);
-                if( cell == MapCell.WALL){
+                if (cell == MapCell.WALL) {
                     g.setColor(Color.blue);
-                }
-                else {
+                } else {
                     g.setColor(Color.white);
                 }
-                g.fillRect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+                g.fillRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
                 g.setColor(Color.black);
-                g.drawLine(0, y*cellHeight, cellWidth*this.getWidth(), y*cellHeight);
-                
+                g.drawLine(0, y * cellHeight, cellWidth * this.getWidth(), y * cellHeight);
+
                 if (cell == MapCell.PILL) {
-                    
+
                     g.setColor(Color.BLACK);
                     drawCircleInCell(g, Color.BLACK, x, y, (float) 0.2);
-                    
+
                 }
             }
             g.setColor(Color.black);
-            g.drawLine(x*cellWidth, 0, x*cellWidth, cellHeight * this.getHeight());
-        }  
+            g.drawLine(x * cellWidth, 0, x * cellWidth, cellHeight * this.getHeight());
+        }
     }
-    
-    void drawPacman(Graphics g, int charX, int charY) {
+
+    void drawPacman(Graphics g, Color color, int charX, int charY) {
         Map map = gameState.getMap();
-        
+
         Integer cellWidth = this.getWidth() / map.getWidth();
         Integer cellHeight = this.getHeight() / map.getHeight();
-                      
-        int pacmanWidth = (int) (cellWidth/1.5);
-        int pacmanHeight = (int) (cellHeight/1.5);
-        
-        int pacmanX = cellWidth * charX + (cellWidth - pacmanWidth)/2;
-        int pacmanY = cellHeight * charY + (cellHeight - pacmanHeight)/2;
-        
-        g.setColor(Color.yellow);
+
+        int pacmanWidth = (int) (cellWidth / 1.5);
+        int pacmanHeight = (int) (cellHeight / 1.5);
+
+        int pacmanX = cellWidth * charX + (cellWidth - pacmanWidth) / 2;
+        int pacmanY = cellHeight * charY + (cellHeight - pacmanHeight) / 2;
+
+        g.setColor(color);
         g.fillOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
         g.setColor(Color.black);
         g.drawOval(pacmanX, pacmanY, pacmanWidth, pacmanHeight);
     }
-    
+
     public void Init() {
         AddKeyboardListener();
         this.repaint();

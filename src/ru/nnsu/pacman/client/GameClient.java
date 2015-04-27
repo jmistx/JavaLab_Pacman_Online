@@ -125,7 +125,7 @@ public class GameClient {
         message.setActionCreateGame();
         message.setMap(map);
         SendMessage(message);
-        return new DtoStartGame(map, this);
+        return new DtoStartGame(map, 0, this);
     }
     
     DtoStartGame JoinGame() throws IOException {
@@ -133,7 +133,7 @@ public class GameClient {
         message.setActionJoinGame();
         SendMessage(message);
         ServerMessage answer = ReadMessage();
-        return new DtoStartGame(answer.getMap(), this);
+        return new DtoStartGame(answer.getMap(), 1, this);
     }
 
     void SendEvent(GameEvent gameEvent) {

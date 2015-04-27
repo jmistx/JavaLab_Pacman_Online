@@ -7,6 +7,7 @@ public class GameEvent implements Serializable{
     int type;
     int x;
     int y;
+    private int playerNumber;
     
     public void Move(int selfPacmanX, int selfPacmanY) {
     }
@@ -35,6 +36,14 @@ public class GameEvent implements Serializable{
     @Override
     public String toString() {
         return String.valueOf(type) + " " + String.valueOf(x) + " " + String.valueOf(y);
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
+    
+    public int getPlayerNumber() {
+        return playerNumber; 
     }
 
 }

@@ -15,66 +15,81 @@ class GameState extends Observable {
     public final static int MOVE_DOWN = 4;
 
     private final Map map;
-    public int selfPacmanX;
-    public int selfPacmanY;
     public int score;
     private final GameClient gameClient;
+    private final int playerNumber;
+    
+    public Player player1;
+    public Player player2;
 
-    GameState(Map map, GameClient gameClient) {
+    GameState(Map map, int playerNumber, GameClient gameClient) {
         this.map = map;
+        this.playerNumber = playerNumber;
         this.gameClient = gameClient;
+        player1 = new Player();
+        player2 = new Player();
     }
-
     public void MoveCharacter(int direction) {
-        int newSelfPacmanX = selfPacmanX;
-        int newSelfPacmanY = selfPacmanY;
+        Player player = playerNumber == 0? player1 : player2;
+        
+        int newX = player.getX();
+        int newY = player.getY();
 
         if (direction == MOVE_LEFT) {
 
-            newSelfPacmanX = selfPacmanX - 1;
-            if (newSelfPacmanX == -1) {
-                newSelfPacmanX = map.getWidth() - 1;
+            newX = player.getX() - 1;
+            if (newX == -1) {
+                newX = map.getWidth() - 1;
             }
         }
         if (direction == MOVE_UP) {
-            newSelfPacmanY = selfPacmanY - 1;
-            if (newSelfPacmanY == -1) {
-                newSelfPacmanY = map.getHeight() - 1;
+            newY = player.getY() - 1;
+            if (newY == -1) {
+                newY = map.getHeight() - 1;
             }
         }
         if (direction == MOVE_RIGHT) {
-            newSelfPacmanX = selfPacmanX + 1;
-            if (newSelfPacmanX == map.getWidth()) {
-                newSelfPacmanX = 0;
+            newX = player.getX() + 1;
+            if (newX == map.getWidth()) {
+                newX = 0;
             }
         }
         if (direction == MOVE_DOWN) {
-            newSelfPacmanY = selfPacmanY + 1;
-            if (newSelfPacmanY == map.getHeight()) {
-                newSelfPacmanY = 0;
+            newY = player.getY() + 1;
+            if (newY == map.getHeight()) {
+                newY = 0;
             }
         }
-        if (map.getCellValue(newSelfPacmanX, newSelfPacmanY) != MapCell.WALL) {
-            selfPacmanX = newSelfPacmanX;
-            selfPacmanY = newSelfPacmanY;
+        if (map.getCellValue(newX, newY) != MapCell.WALL) {
+            player.setX(newX);
+            player.setY(newY);
         }
-        if (map.getCellValue(selfPacmanX, selfPacmanY) == MapCell.PILL) {
-            map.SetCellValue(selfPacmanX, selfPacmanY, MapCell.EMPTY);
+        if (map.getCellValue(player.getX(), player.getY()) == MapCell.PILL) {
+            map.SetCellValue(player.getX(), player.getY(), MapCell.EMPTY);
             score += 1;
         }
+        
         GameEvent gameEvent = new GameEvent();
+        gameEvent.setPlayerNumber(playerNumber);
         gameEvent.setType(GameEvent.MOVE);
-        gameEvent.setPosition(selfPacmanX, selfPacmanY);
+        gameEvent.setPosition(player.getX(), player.getY());
+        
         gameClient.SendEvent(gameEvent);
         setChanged();
         notifyObservers();
     }
+    
 
     Map getMap() {
         return map;
     }
 
     void dispatchEvent(GameEvent event) {
-        JOptionPane.showMessageDialog(null, event.toString());
+        Player player = event.getPlayerNumber() == 0? player1 : player2;
+        player.setX(event.getX());
+        player.setY(event.getY());
+        
+        setChanged();
+        notifyObservers();
     }
 }

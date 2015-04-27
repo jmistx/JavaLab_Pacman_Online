@@ -31,6 +31,8 @@ class ConnectionProcesser implements Runnable {
     public void run() {
         System.out.println("Sombody connected");
         Game game = null;
+        int playerNumber = -1;
+        
         try {
             ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
             final ObjectOutputStream socketOut = new ObjectOutputStream(socket.getOutputStream());
@@ -42,9 +44,11 @@ class ConnectionProcesser implements Runnable {
                 PlayerMessage message2 = (PlayerMessage) socketIn.readObject();
                 if (message2.getAction().equals("Create_Game")) {
                     game = viewModel.AddGame(message2.getMap());
+                    playerNumber = 0;
                 }
                 if (message2.getAction().equals("Join_Game")) {
                     game = viewModel.joinAvailableGame();
+                    playerNumber = 1;
                     ServerMessage answer = new ServerMessage();
                     if (game == null) {
                         answer.setMap(null);
@@ -55,20 +59,7 @@ class ConnectionProcesser implements Runnable {
                 }
             }
 
-            game.addObserver(new Observer() {
-                @Override
-                public void update(Observable o, Object arg) {
-                    GameEvent event = (GameEvent) arg;
-                    try {
-                        ServerMessage answer = new ServerMessage();
-                        answer.setGameEvent(event);
-                        socketOut.writeObject(answer);
-                    } catch (IOException ex) {
-                        Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-
+            game.addObserver(new GameEventNotifier(playerNumber, socketOut));
             while (true) {
                 PlayerMessage message3 = (PlayerMessage) socketIn.readObject();
                 if (message3.getAction().equals("Game_Event")) {
@@ -80,6 +71,30 @@ class ConnectionProcesser implements Runnable {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private static class GameEventNotifier implements Observer {
+
+        private final ObjectOutputStream socketOut;
+        private final int playerNumber;
+
+        public GameEventNotifier(int playerNumber, ObjectOutputStream socketOut) {
+            this.playerNumber = playerNumber;
+            this.socketOut = socketOut;
+        }
+
+        @Override
+        public void update(Observable o, Object arg) {
+            GameEvent event = (GameEvent) arg;
+            if (event.getPlayerNumber() == playerNumber) return;
+            try {
+                ServerMessage answer = new ServerMessage();
+                answer.setGameEvent(event);
+                socketOut.writeObject(answer);
+            } catch (IOException ex) {
+                Logger.getLogger(ConnectionProcesser.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

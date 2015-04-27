@@ -114,20 +114,25 @@ public class FormGame extends javax.swing.JPanel {
         if (dto.getMap() == null) {
             navigator.navigateToMainMenu();
         }
-        this.GamePanelContainer.removeAll();
+        
         final GameClient gameClient = dto.getGameClient();
-        final GameState gameState = new GameState(dto.getMap(), gameClient);
+        final GameState gameState = new GameState(dto.getMap(), dto.getPlayerNumber(), gameClient);
         PanelGame gamePanel = new PanelGame(gameState);
+        
+        this.GamePanelContainer.removeAll();
         this.GamePanelContainer.add(gamePanel);
+        
         gamePanel.setBounds(0, 0, 500, 500);
         gamePanel.setPreferredSize(new Dimension(500, 500));
         gamePanel.setVisible(true);
         gamePanel.Init();
+        
         gameState.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 GameState state = (GameState) o;
                 yourScore.setText(String.valueOf(state.score));
+                repaint();
             }
         });
         Thread thread = new Thread(new Runnable() {
