@@ -104,6 +104,15 @@ public class GameClient {
         ServerMessage answer = ReadMessage();
         return new DtoStartGame(answer.getMap(), 1, this);
     }
+    
+    DtoStartGame ObserveGame() throws IOException {
+        PlayerMessage message = new PlayerMessage();
+        message.setActionObserveGame();
+        SendMessage(message);
+        ServerMessage answer = ReadMessage();
+        return new DtoStartGame(answer.getMap(), -1, this);
+
+    }
 
     void SendEvent(GameEvent gameEvent) throws IOException{
         PlayerMessage message = new PlayerMessage();
@@ -115,5 +124,7 @@ public class GameClient {
         ServerMessage answer = ReadMessage();
         return answer.getGameEvent();
     }
+
+    
 
 }

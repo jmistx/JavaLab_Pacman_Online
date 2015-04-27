@@ -33,6 +33,7 @@ public class FormCreateGame extends javax.swing.JPanel {
         MapComboBox = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         JoinGame = new javax.swing.JButton();
+        observeGameButton = new javax.swing.JButton();
 
         CreateGameButton.setText("Создать игру");
         CreateGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -52,18 +53,26 @@ public class FormCreateGame extends javax.swing.JPanel {
             }
         });
 
+        observeGameButton.setText("Посмотреть чужую игру");
+        observeGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                observeGameButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(CreateGameButton)
-                    .addComponent(JoinGame, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(JoinGame, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(observeGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CreateGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -72,14 +81,21 @@ public class FormCreateGame extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(MapComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CreateGameButton)
                 .addGap(18, 18, 18)
                 .addComponent(JoinGame)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(observeGameButton)
+                .addContainerGap(117, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void OnConnectionBroken() {
+        JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
+            navigator.navigateToStart();
+    }
+    
     private void CreateGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateGameButtonActionPerformed
         Map selectedMap = viewModel.getSelectedMap();
         DtoStartGame dto;
@@ -87,9 +103,7 @@ public class FormCreateGame extends javax.swing.JPanel {
             dto = gameClient.CreateGame(selectedMap);
             navigator.navigateToGame(dto);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
-            navigator.navigateToStart();
-            Logger.getLogger(FormCreateGame.class.getName()).log(Level.SEVERE, null, ex);
+            OnConnectionBroken();
         }
     }//GEN-LAST:event_CreateGameButtonActionPerformed
 
@@ -98,10 +112,18 @@ public class FormCreateGame extends javax.swing.JPanel {
             DtoStartGame startGameDto = gameClient.JoinGame();
             navigator.navigateToGame(startGameDto);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Потеряна связь с сервером.");
-            navigator.navigateToStart();
+            OnConnectionBroken();
         }
     }//GEN-LAST:event_JoinGameActionPerformed
+
+    private void observeGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observeGameButtonActionPerformed
+        try {
+            DtoStartGame startGameDto = gameClient.ObserveGame();
+            navigator.navigateToGame(startGameDto);
+        } catch (IOException ex) {
+            OnConnectionBroken();
+        }
+    }//GEN-LAST:event_observeGameButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -109,5 +131,6 @@ public class FormCreateGame extends javax.swing.JPanel {
     private javax.swing.JButton JoinGame;
     private javax.swing.JComboBox MapComboBox;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton observeGameButton;
     // End of variables declaration//GEN-END:variables
 }

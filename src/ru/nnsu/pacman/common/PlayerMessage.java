@@ -7,7 +7,11 @@ public class PlayerMessage implements Serializable {
     private String action;
     private Map map;
     private GameEvent gameEvent;
-
+    private final String createGame = "Create_Game";
+    private final String joinGame = "Join_Game";
+    private final String observeGame = "Observe_Game";
+    
+    
     public String getNickName() {
         return nickName;
     }
@@ -17,8 +21,30 @@ public class PlayerMessage implements Serializable {
     }
 
     public void setActionCreateGame() {
-        this.action = "Create_Game";
+        
+        this.action = createGame;
     }
+    
+    public boolean isActionCreateGame() {
+        return this.action.equals(createGame);
+    }
+    
+    public void setActionJoinGame() {
+        this.action = joinGame;
+    }
+    
+    public boolean isActionJoinGame() {
+        return this.action.equals(joinGame);
+    }
+    
+    public void setActionObserveGame() {
+        this.action = observeGame;
+    }
+    
+    public boolean isActionObserveGame() {
+        return this.action.equals(observeGame);
+    }
+
 
     public String getAction() {
         return this.action;
@@ -32,10 +58,6 @@ public class PlayerMessage implements Serializable {
         return this.map;
     }
 
-    public void setActionJoinGame() {
-        this.action = "Join_Game";
-    }
-
     public void setGameEvent(GameEvent gameEvent) {
         this.action = "Game_Event";
         this.gameEvent = gameEvent;
@@ -44,5 +66,7 @@ public class PlayerMessage implements Serializable {
     public GameEvent getGameEvent() {
         return gameEvent;
     }
+
+    
 
 }

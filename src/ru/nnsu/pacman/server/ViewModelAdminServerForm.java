@@ -39,7 +39,17 @@ public class ViewModelAdminServerForm {
         }
         return null;
     }
-
+    
+    
+    Game observeAvailableGame() {
+        for (Game game : games){
+            if (game.isFinished() == false) {
+                return game;
+            }
+        }
+        return null;
+    }
+    
     void removeUser(String userNickName) {
         userListModel.removeElement(userNickName);
     }
@@ -51,6 +61,6 @@ public class ViewModelAdminServerForm {
                 gameTableModel.removeRow(i);
             }
         }
+        games.remove(game);
     }
-    
 }
