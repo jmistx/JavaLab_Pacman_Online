@@ -72,7 +72,7 @@ class ConnectionProcesser implements Runnable {
             game.addObserver(new GameEventNotifier(playerNumber, socketOut));
             while (true) {
                 PlayerMessage message3 = (PlayerMessage) socketIn.readObject();
-                if (message3.getAction().equals("Game_Event")) {
+                if (message3.isGameEvent()) {
                     game.dispatchEvent(message3.getGameEvent());
                 }
             }

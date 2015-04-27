@@ -10,6 +10,7 @@ public class PlayerMessage implements Serializable {
     private final String createGame = "Create_Game";
     private final String joinGame = "Join_Game";
     private final String observeGame = "Observe_Game";
+    private final String eventInGame = "Game_Event";
     
     
     public String getNickName() {
@@ -44,10 +45,9 @@ public class PlayerMessage implements Serializable {
     public boolean isActionObserveGame() {
         return this.action.equals(observeGame);
     }
-
-
-    public String getAction() {
-        return this.action;
+    
+    public boolean isGameEvent() {
+        return this.action.equals(eventInGame);
     }
 
     public void setMap(Map map) {
@@ -59,14 +59,11 @@ public class PlayerMessage implements Serializable {
     }
 
     public void setGameEvent(GameEvent gameEvent) {
-        this.action = "Game_Event";
+        this.action = eventInGame;
         this.gameEvent = gameEvent;
     }
     
     public GameEvent getGameEvent() {
         return gameEvent;
     }
-
-    
-
 }
